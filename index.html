@@ -19,26 +19,31 @@
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; min-height: 100vh; }
 
 header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 52px; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
-.header-left { display: flex; align-items: center; gap: 12px; }
 header h1 { font-size: 15px; font-weight: 700; color: var(--accent); }
 .cloud-bar { display: flex; align-items: center; gap: 8px; }
-.gas-url-input { padding: 5px 10px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 12px; width: 260px; background: var(--surface); color: var(--text); }
-.gas-url-input:focus { outline: none; border-color: var(--accent); }
-.sync-status { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.sync-status { font-size: 11px; white-space: nowrap; }
 .sync-status.ok { color: var(--green); }
 .sync-status.err { color: var(--danger); }
 
+/* tabs */
 .tabs { display: flex; background: var(--surface2); border-bottom: 1px solid var(--border); padding: 0 20px; }
 .tab-btn { padding: 10px 20px; border: none; background: none; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--muted); border-bottom: 2px solid transparent; transition: all 0.15s; margin-bottom: -1px; }
 .tab-btn:hover { color: var(--text); }
 .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: var(--surface); }
 
-.tab-panel { display: none; padding: 20px; max-width: 1000px; margin: 0 auto; }
+/* sub-tabs inside recipe panel */
+.sub-tabs { display: flex; gap: 4px; margin-bottom: 16px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 4px; width: fit-content; }
+.sub-tab-btn { padding: 6px 18px; border: none; background: none; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--muted); border-radius: 6px; transition: all 0.15s; }
+.sub-tab-btn:hover { color: var(--text); }
+.sub-tab-btn.active { background: var(--surface); color: var(--accent); box-shadow: var(--shadow); font-weight: 700; }
+
+.tab-panel { display: none; padding: 20px; max-width: 1040px; margin: 0 auto; }
 .tab-panel.active { display: block; }
 
 .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
 .section-title { font-size: 15px; font-weight: 700; }
 
+/* buttons */
 .btn { display: inline-flex; align-items: center; gap: 5px; padding: 7px 14px; border-radius: var(--radius); border: none; cursor: pointer; font-size: 13px; font-weight: 500; transition: all 0.15s; white-space: nowrap; }
 .btn-primary { background: var(--accent); color: white; }
 .btn-primary:hover { background: var(--accent-dark); }
@@ -51,11 +56,14 @@ header h1 { font-size: 15px; font-weight: 700; color: var(--accent); }
 .btn-cloud { background: var(--blue-light); color: var(--blue); border: 1px solid #c5d3f5; }
 .btn-cloud:hover { background: #d4dffb; }
 .btn-sm { padding: 4px 10px; font-size: 12px; }
-.btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
+/* table */
 .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
 table { width: 100%; border-collapse: collapse; }
 th { background: var(--surface2); text-align: left; padding: 9px 14px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); }
+th.sortable { cursor: pointer; user-select: none; transition: color 0.15s; }
+th.sortable:hover { color: var(--accent); }
+.sort-icon { display: inline-block; margin-left: 4px; font-size: 10px; color: var(--accent); }
 td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
 tr:last-child td { border-bottom: none; }
 tr:hover td { background: #faf9f7; }
@@ -65,6 +73,7 @@ tr:hover td { background: #faf9f7; }
 .empty-state { text-align: center; padding: 40px 24px; color: var(--muted); }
 .empty-state p { margin-top: 6px; font-size: 13px; }
 
+/* modal */
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
 .modal-overlay.open { display: flex; }
 .modal { background: var(--surface); border-radius: 12px; box-shadow: var(--shadow-md); width: 100%; max-width: 580px; max-height: 90vh; overflow-y: auto; }
@@ -73,20 +82,20 @@ tr:hover td { background: #faf9f7; }
 .modal-body { padding: 18px 20px; }
 .modal-footer { padding: 12px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
 
+/* forms */
 .form-row { display: grid; gap: 12px; margin-bottom: 12px; }
 .form-row.cols2 { grid-template-columns: 1fr 1fr; }
-.form-row.cols3 { grid-template-columns: 2fr 1fr 1fr; }
-.form-row.cols4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.form-row.cols3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-row.cols4 { grid-template-columns: 2fr 1fr 1fr 1fr; }
 .form-group { display: flex; flex-direction: column; gap: 4px; }
 .form-group label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
 .form-group input, .form-group select { padding: 7px 10px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 13px; background: var(--surface); color: var(--text); transition: border-color 0.15s; width: 100%; }
 .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--accent); }
-.form-hint { font-size: 11px; color: var(--muted); }
 
 .unit-price-tip { background: var(--accent-light); border: 1px solid #f0c9a0; border-radius: var(--radius); padding: 7px 12px; font-size: 12px; margin-top: 6px; display: none; }
 .unit-price-tip strong { color: var(--accent); }
 
-/* Ingredient editor — key fix: no re-render on input */
+/* ingredient editor */
 .ing-section-title { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin: 16px 0 6px; }
 .ing-header { display: grid; grid-template-columns: 1fr 90px 80px 90px 32px; gap: 6px; padding: 0 8px; margin-bottom: 3px; }
 .ing-header span { font-size: 11px; color: var(--muted); font-weight: 600; text-align: right; }
@@ -94,11 +103,13 @@ tr:hover td { background: #faf9f7; }
 .ing-row { display: grid; grid-template-columns: 1fr 90px 80px 90px 32px; gap: 6px; align-items: center; margin-bottom: 6px; padding: 8px; background: var(--surface2); border-radius: var(--radius); border: 1px solid var(--border); }
 .ing-row select, .ing-row input[type=number] { padding: 5px 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 12px; background: var(--surface); color: var(--text); width: 100%; }
 .ing-row select:focus, .ing-row input:focus { outline: none; border-color: var(--accent); }
+.ing-vendor { font-size: 11px; color: var(--muted); margin-top: 3px; padding-left: 2px; min-height: 14px; }
 .ing-unit-cost { font-size: 12px; color: var(--muted); text-align: right; }
 .ing-subtotal { font-size: 12px; font-weight: 600; color: var(--accent); text-align: right; }
 .btn-del-ing { width: 28px; height: 28px; border-radius: 6px; border: none; background: var(--danger-light); color: var(--danger); cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .btn-del-ing:hover { background: #faddda; }
 
+/* cost preview */
 .cost-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-top: 14px; overflow: hidden; }
 .cost-panel-title { background: var(--surface2); padding: 7px 14px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
 .cost-table { width: 100%; border-collapse: collapse; font-size: 12px; }
@@ -107,6 +118,7 @@ tr:hover td { background: #faf9f7; }
 .cost-table tr:last-child td { border-bottom: none; }
 .cost-summary { padding: 10px 14px; background: var(--green-light); border-top: 1px solid #b8ddc9; display: flex; justify-content: space-between; align-items: center; }
 
+/* recipe cards */
 .recipe-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; overflow: hidden; box-shadow: var(--shadow); }
 .recipe-card-header { display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; cursor: pointer; transition: background 0.1s; }
 .recipe-card-header:hover { background: var(--surface2); }
@@ -141,8 +153,6 @@ tr:hover td { background: #faf9f7; }
 .tag { font-size: 11px; color: var(--muted); background: var(--surface2); padding: 2px 8px; border-radius: 100px; border: 1px solid var(--border); }
 .chevron { display: inline-block; transition: transform 0.2s; font-style: normal; font-size: 11px; color: var(--muted); }
 .chevron.open { transform: rotate(180deg); }
-
-/* toast */
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #2c2a27; color: #fff; padding: 10px 20px; border-radius: 100px; font-size: 13px; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
 .toast.show { opacity: 1; }
 </style>
@@ -150,9 +160,7 @@ tr:hover td { background: #faf9f7; }
 <body>
 
 <header>
-  <div class="header-left">
-    <h1>🧾 成本計算</h1>
-  </div>
+  <h1>🧾 產品成本計算</h1>
   <div class="cloud-bar">
     <button class="btn btn-cloud btn-sm" onclick="loadFromCloud()">☁ 從雲端載入</button>
     <button class="btn btn-cloud btn-sm" onclick="saveToCloud()">💾 儲存到雲端</button>
@@ -170,14 +178,15 @@ tr:hover td { background: #faf9f7; }
   <div class="section-header">
     <div class="section-title">原料庫</div>
     <div class="flex-gap">
-      <input class="search-bar" type="text" placeholder="搜尋原料..." oninput="renderMaterials(this.value)">
+      <input class="search-bar" type="text" placeholder="搜尋原料或廠商..." oninput="renderMaterials(this.value)">
       <button class="btn btn-primary" onclick="openMaterialModal()">＋ 新增原料</button>
     </div>
   </div>
   <div class="table-wrap">
     <table>
       <thead><tr>
-        <th>品名</th>
+        <th class="sortable" onclick="toggleSort('name')">品名<span class="sort-icon" id="sort-name"></span></th>
+        <th class="sortable" onclick="toggleSort('vendor')">廠商<span class="sort-icon" id="sort-vendor"></span></th>
         <th class="td-right">進價（元）</th>
         <th class="td-right">容量</th>
         <th>單位</th>
@@ -198,14 +207,21 @@ tr:hover td { background: #faf9f7; }
   <div class="section-header">
     <div class="section-title">配方 / 成品</div>
     <div class="flex-gap">
-      <input class="search-bar" type="text" placeholder="搜尋配方..." oninput="renderRecipes(this.value)">
+      <input class="search-bar" type="text" id="recipe-search" placeholder="搜尋配方..." oninput="renderCurrentRecipeTab()">
       <button class="btn btn-primary" onclick="openRecipeModal()">＋ 新增配方</button>
     </div>
   </div>
+
+  <!-- sub-tabs: 半成品 / 成品 -->
+  <div class="sub-tabs">
+    <button class="sub-tab-btn active" onclick="switchSubTab('semi', this)">半成品</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('product', this)">成品</button>
+  </div>
+
   <div id="recipes-list"></div>
   <div id="recipes-empty" class="empty-state" style="display:none">
     <div style="font-size:32px">🍞</div>
-    <p>尚無配方，點選「新增配方」開始建立</p>
+    <p>尚無資料，點選「新增配方」開始建立</p>
   </div>
 </div>
 
@@ -217,13 +233,17 @@ tr:hover td { background: #faf9f7; }
       <button class="close-btn" onclick="closeMaterialModal()">✕</button>
     </div>
     <div class="modal-body">
-      <div class="form-row">
+      <div class="form-row cols2">
         <div class="form-group">
           <label>品名</label>
           <input type="text" id="m-name" placeholder="例：細砂糖">
         </div>
+        <div class="form-group">
+          <label>廠商</label>
+          <input type="text" id="m-vendor" placeholder="例：和岱">
+        </div>
       </div>
-      <div class="form-row cols3">
+      <div class="form-row cols4">
         <div class="form-group">
           <label>進價（元）</label>
           <input type="number" id="m-price" placeholder="0" min="0" step="0.001" oninput="previewUnitPrice()">
@@ -297,11 +317,7 @@ tr:hover td { background: #faf9f7; }
 
       <div class="ing-section-title">食材組成</div>
       <div class="ing-header">
-        <span>食材</span>
-        <span>用量</span>
-        <span>單價</span>
-        <span>小計</span>
-        <span></span>
+        <span>食材</span><span>用量</span><span>單價</span><span>小計</span><span></span>
       </div>
       <div id="ing-editor"></div>
       <button class="btn btn-ghost btn-sm" onclick="addIngRow()" style="margin-top:6px">＋ 新增食材</button>
@@ -330,44 +346,48 @@ tr:hover td { background: #faf9f7; }
 
 <script>
 // ══════════════════════════════════════════
-//  DATA
-// ══════════════════════════════════════════
-let materials = JSON.parse(localStorage.getItem('cost_v3_materials') || '[]');
-let recipes   = JSON.parse(localStorage.getItem('cost_v3_recipes')   || '[]');
-let editMatId = null, editRecId = null;
-
-// ingRows: [{rowId, refId, refType, amount}]
-// amount stored as number, inputs updated directly via DOM — NO re-render on input
-let ingRows = [];
-
-function persist() {
-  localStorage.setItem('cost_v3_materials', JSON.stringify(materials));
-  localStorage.setItem('cost_v3_recipes',   JSON.stringify(recipes));
-}
-function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
-
-function toast(msg, ok = true) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = 'toast show';
-  setTimeout(() => el.className = 'toast', 2500);
-}
-
-// ══════════════════════════════════════════
-//  CLOUD SYNC — URL 寫死在這裡，不需要輸入框
+//  CONFIG — 把 GAS URL 填在這裡
 // ══════════════════════════════════════════
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwZldlhrSsHiH2BZjNSik0wcwKWS2gTgV3A-yh3UUOztGW5icVBoCoR7rbtcpiQOGkP/exec';
 
+// ══════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════
+let materials = JSON.parse(localStorage.getItem('cost_v4_materials') || '[]');
+let recipes   = JSON.parse(localStorage.getItem('cost_v4_recipes')   || '[]');
+let editMatId = null, editRecId = null;
+let ingRows   = [];
+let currentSubTab = 'semi'; // 'semi' | 'product'
+
+function persist() {
+  localStorage.setItem('cost_v4_materials', JSON.stringify(materials));
+  localStorage.setItem('cost_v4_recipes',   JSON.stringify(recipes));
+}
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = 'toast show';
+  setTimeout(() => el.className = 'toast', 2500);
+}
+function setStatus(msg, cls) {
+  const el = document.getElementById('sync-status');
+  el.textContent = msg;
+  el.className = 'sync-status' + (cls ? ' ' + cls : '');
+}
+
+// ══════════════════════════════════════════
+//  CLOUD SYNC
+// ══════════════════════════════════════════
 async function loadFromCloud() {
   setStatus('載入中...', '');
   try {
-    const res = await fetch(GAS_URL + '?action=load');
+    const res  = await fetch(GAS_URL + '?action=load');
     const data = await res.json();
     if (data.error) throw new Error(data.error);
     materials = data.materials || [];
     recipes   = data.recipes   || [];
     persist();
-    renderMaterials(); renderRecipes();
+    renderMaterials(); renderCurrentRecipeTab();
     setStatus('✓ 雲端載入成功', 'ok');
     toast('已從雲端載入資料');
   } catch(e) {
@@ -375,12 +395,11 @@ async function loadFromCloud() {
     alert('載入失敗：' + e.message);
   }
 }
-
 async function saveToCloud() {
   setStatus('儲存中...', '');
   try {
     const payload = encodeURIComponent(JSON.stringify({ materials, recipes }));
-    const res = await fetch(`${GAS_URL}?action=save&data=${payload}`);
+    const res  = await fetch(`${GAS_URL}?action=save&data=${payload}`);
     const data = await res.json();
     if (data.error) throw new Error(data.error);
     setStatus('✓ 已儲存到雲端', 'ok');
@@ -391,12 +410,6 @@ async function saveToCloud() {
   }
 }
 
-function setStatus(msg, cls) {
-  const el = document.getElementById('sync-status');
-  el.textContent = msg;
-  el.className = 'sync-status' + (cls ? ' ' + cls : '');
-}
-
 // ══════════════════════════════════════════
 //  TABS
 // ══════════════════════════════════════════
@@ -405,11 +418,23 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   btn.classList.add('active');
-  name === 'materials' ? renderMaterials() : renderRecipes();
+  name === 'materials' ? renderMaterials() : renderCurrentRecipeTab();
+}
+
+function switchSubTab(type, btn) {
+  currentSubTab = type;
+  document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCurrentRecipeTab();
+}
+
+function renderCurrentRecipeTab() {
+  const search = document.getElementById('recipe-search')?.value || '';
+  renderRecipes(currentSubTab, search);
 }
 
 // ══════════════════════════════════════════
-//  UNIT PRICE
+//  COST CALC
 // ══════════════════════════════════════════
 function unitPrice(m) {
   return (m.price > 0 && m.capacity > 0) ? m.price / m.capacity : null;
@@ -436,16 +461,54 @@ function calcRecipeCost(r) {
 // ══════════════════════════════════════════
 //  MATERIALS
 // ══════════════════════════════════════════
+let matSortField = null;   // 'name' | 'vendor' | null
+let matSortDir = 'asc';    // 'asc' | 'desc'
+let matLastSearch = '';
+
+function toggleSort(field) {
+  if (matSortField === field) {
+    matSortDir = matSortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    matSortField = field;
+    matSortDir = 'asc';
+  }
+  renderMaterials(matLastSearch);
+}
+
+function updateSortIcons() {
+  ['name', 'vendor'].forEach(f => {
+    const el = document.getElementById('sort-' + f);
+    if (!el) return;
+    if (matSortField === f) el.textContent = matSortDir === 'asc' ? '▲' : '▼';
+    else el.textContent = '';
+  });
+}
+
 function renderMaterials(search = '') {
+  matLastSearch = search;
   const tbody = document.getElementById('materials-tbody');
   const empty = document.getElementById('materials-empty');
-  const list = materials.filter(m => m.name.includes(search));
+  let list  = materials.filter(m =>
+    m.name.includes(search) || (m.vendor || '').includes(search)
+  );
+
+  if (matSortField) {
+    list = [...list].sort((a, b) => {
+      const va = (matSortField === 'vendor' ? (a.vendor || '') : a.name).toLocaleLowerCase('zh-Hant');
+      const vb = (matSortField === 'vendor' ? (b.vendor || '') : b.name).toLocaleLowerCase('zh-Hant');
+      const cmp = va.localeCompare(vb, 'zh-Hant');
+      return matSortDir === 'asc' ? cmp : -cmp;
+    });
+  }
+  updateSortIcons();
+
   if (!list.length) { tbody.innerHTML = ''; empty.style.display = 'block'; return; }
   empty.style.display = 'none';
   tbody.innerHTML = list.map(m => {
     const up = unitPrice(m);
     return `<tr>
       <td><strong>${m.name}</strong></td>
+      <td style="color:var(--muted)">${m.vendor || '—'}</td>
       <td class="td-right">$${m.price.toFixed(3)}</td>
       <td class="td-right">${m.capacity}</td>
       <td><span class="tag">${m.unit}</span></td>
@@ -465,12 +528,13 @@ function openMaterialModal(id = null) {
   if (id) {
     const m = materials.find(x => x.id === id);
     document.getElementById('m-name').value     = m.name;
+    document.getElementById('m-vendor').value   = m.vendor || '';
     document.getElementById('m-price').value    = m.price;
     document.getElementById('m-capacity').value = m.capacity;
     document.getElementById('m-unit').value     = m.unit;
     previewUnitPrice();
   } else {
-    ['m-name','m-price','m-capacity'].forEach(id => document.getElementById(id).value = '');
+    ['m-name','m-vendor','m-price','m-capacity'].forEach(i => document.getElementById(i).value = '');
     document.getElementById('m-unit').value = 'g';
   }
   document.getElementById('material-modal').classList.add('open');
@@ -492,17 +556,18 @@ function previewUnitPrice() {
 }
 function saveMaterial() {
   const name     = document.getElementById('m-name').value.trim();
+  const vendor   = document.getElementById('m-vendor').value.trim();
   const price    = parseFloat(document.getElementById('m-price').value);
   const capacity = parseFloat(document.getElementById('m-capacity').value);
   const unit     = document.getElementById('m-unit').value;
-  if (!name) return alert('請輸入品名');
-  if (!price || price <= 0) return alert('請輸入正確進價');
-  if (!capacity || capacity <= 0) return alert('請輸入正確容量');
+  if (!name)               return alert('請輸入品名');
+  if (!price || price <= 0)    return alert('請輸入正確進價');
+  if (!capacity || capacity<=0) return alert('請輸入正確容量');
   if (editMatId) {
     const i = materials.findIndex(x => x.id === editMatId);
-    materials[i] = { ...materials[i], name, price, capacity, unit };
+    materials[i] = { ...materials[i], name, vendor, price, capacity, unit };
   } else {
-    materials.push({ id: uid(), name, price, capacity, unit });
+    materials.push({ id: uid(), name, vendor, price, capacity, unit });
   }
   persist(); closeMaterialModal(); renderMaterials();
   toast(editMatId ? '原料已更新' : '原料已新增');
@@ -517,7 +582,7 @@ function deleteMaterial(id) {
 }
 
 // ══════════════════════════════════════════
-//  INGREDIENT EDITOR — fix: no re-render on amount input
+//  INGREDIENT EDITOR
 // ══════════════════════════════════════════
 function getRefOptions(excludeId = null) {
   return [
@@ -526,11 +591,15 @@ function getRefOptions(excludeId = null) {
                .map(r => ({ id: r.id, type: 'recipe', label: `[半成品] ${r.name}`, unit: r.yieldUnit }))
   ];
 }
-
 function addIngRow(ing = null) {
   const rowId = uid();
   ingRows.push({ rowId, refId: ing?.refId || '', refType: ing?.refType || 'material', amount: ing?.amount ?? 0 });
   appendIngRowDOM(ingRows.length - 1, rowId, ing?.refId || '', ing?.refType || 'material', ing?.amount ?? '');
+}
+function getVendorStr(refId, refType) {
+  if (refType !== 'material') return '';
+  const m = materials.find(x => x.id === refId);
+  return (m && m.vendor) ? m.vendor : '';
 }
 
 function appendIngRowDOM(idx, rowId, refId, refType, amount) {
@@ -538,30 +607,27 @@ function appendIngRowDOM(idx, rowId, refId, refType, amount) {
   const selOpts = opts.map(o =>
     `<option value="${o.id}|${o.type}" ${refId === o.id ? 'selected' : ''}>${o.label}</option>`
   ).join('');
-
   const selRef = opts.find(o => o.id === refId);
   const uc = selRef ? getUnitCost(refId, refType) : null;
-  const unitCostStr = uc !== null ? '$' + uc.toFixed(4) : '—';
-  const subtotalStr = (uc !== null && amount > 0) ? '$' + (uc * parseFloat(amount)).toFixed(2) : '—';
-
+  const ucStr = uc !== null ? '$' + uc.toFixed(4) : '—';
+  const stStr = (uc !== null && amount > 0) ? '$' + (uc * parseFloat(amount)).toFixed(2) : '—';
+  const vendor = getVendorStr(refId, refType);
   const div = document.createElement('div');
-  div.className = 'ing-row';
-  div.dataset.rowid = rowId;
+  div.className = 'ing-row'; div.dataset.rowid = rowId;
   div.innerHTML = `
-    <select onchange="ingRefChange(this, '${rowId}')">
-      <option value="">選擇食材...</option>
-      ${selOpts}
-    </select>
+    <div>
+      <select onchange="ingRefChange(this,'${rowId}')">
+        <option value="">選擇食材...</option>${selOpts}
+      </select>
+      <div class="ing-vendor" id="vendor-${rowId}">${vendor ? '🏭 ' + vendor : ''}</div>
+    </div>
     <input type="number" min="0" step="0.001" placeholder="用量" value="${amount || ''}"
-      onblur="ingAmtBlur(this, '${rowId}')"
-      oninput="ingAmtInput(this, '${rowId}')">
-    <div class="ing-unit-cost" id="uc-${rowId}">${unitCostStr}</div>
-    <div class="ing-subtotal" id="st-${rowId}">${subtotalStr}</div>
+      oninput="ingAmtInput(this,'${rowId}')" onblur="ingAmtBlur(this,'${rowId}')">
+    <div class="ing-unit-cost" id="uc-${rowId}">${ucStr}</div>
+    <div class="ing-subtotal" id="st-${rowId}">${stStr}</div>
     <button class="btn-del-ing" onclick="removeIngRow('${rowId}')">✕</button>`;
   document.getElementById('ing-editor').appendChild(div);
 }
-
-// Update amount in data + subtotal display WITHOUT re-rendering whole editor
 function ingAmtInput(input, rowId) {
   const row = ingRows.find(r => r.rowId === rowId);
   if (!row) return;
@@ -571,26 +637,27 @@ function ingAmtInput(input, rowId) {
   const stEl = document.getElementById('st-' + rowId);
   if (stEl) stEl.textContent = (uc !== null && amt > 0) ? '$' + (uc * amt).toFixed(2) : '—';
 }
-
 function ingAmtBlur(input, rowId) {
   const row = ingRows.find(r => r.rowId === rowId);
   if (row) row.amount = parseFloat(input.value) || 0;
 }
-
 function ingRefChange(select, rowId) {
   const row = ingRows.find(r => r.rowId === rowId);
   if (!row) return;
   const val = select.value;
   if (!val) { row.refId = ''; row.refType = 'material'; }
   else { const [id, type] = val.split('|'); row.refId = id; row.refType = type; }
-
   const uc = row.refId ? getUnitCost(row.refId, row.refType) : null;
-  const ucEl = document.getElementById('uc-' + rowId);
-  const stEl = document.getElementById('st-' + rowId);
+  const ucEl     = document.getElementById('uc-' + rowId);
+  const stEl     = document.getElementById('st-' + rowId);
+  const vendorEl = document.getElementById('vendor-' + rowId);
   if (ucEl) ucEl.textContent = uc !== null ? '$' + uc.toFixed(4) : '—';
   if (stEl) stEl.textContent = (uc !== null && row.amount > 0) ? '$' + (uc * row.amount).toFixed(2) : '—';
+  if (vendorEl) {
+    const vendor = getVendorStr(row.refId, row.refType);
+    vendorEl.textContent = vendor ? '🏭 ' + vendor : '';
+  }
 }
-
 function removeIngRow(rowId) {
   ingRows = ingRows.filter(r => r.rowId !== rowId);
   const el = document.querySelector(`[data-rowid="${rowId}"]`);
@@ -613,8 +680,8 @@ function openRecipeModal(id = null) {
     document.getElementById('r-yield-unit').value = r.yieldUnit;
     r.ingredients.forEach(ing => addIngRow(ing));
   } else {
-    ['r-name','r-yield'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('r-type').value       = 'semi';
+    ['r-name','r-yield'].forEach(i => document.getElementById(i).value = '');
+    document.getElementById('r-type').value       = currentSubTab; // 預設跟目前分頁一致
     document.getElementById('r-yield-unit').value = 'g';
   }
   document.getElementById('recipe-modal').classList.add('open');
@@ -629,41 +696,34 @@ function calcAndPreview() {
   const yieldAmt  = parseFloat(document.getElementById('r-yield').value);
   const yieldUnit = document.getElementById('r-yield-unit').value;
   if (!yieldAmt || yieldAmt <= 0) return alert('請先填入產出量');
-  const opts = getRefOptions(editRecId);
+  const opts  = getRefOptions(editRecId);
   const valid = ingRows.filter(r => r.refId && r.amount > 0);
   if (!valid.length) return alert('請先加入食材並填寫用量');
 
   let totalCost = 0, totalWeight = 0, rows = '';
   for (const row of valid) {
-    const ref = opts.find(o => o.id === row.refId);
-    const refName = ref ? ref.label.replace(/^\[.*?\] /, '') : '?';
-    const refUnit = ref ? ref.unit : '';
-    const uc = getUnitCost(row.refId, row.refType);
-    const subtotal = uc !== null ? uc * row.amount : null;
-    if (subtotal !== null) totalCost += subtotal;
+    const ref  = opts.find(o => o.id === row.refId);
+    const name = ref ? ref.label.replace(/^\[.*?\] /, '') : '?';
+    const unit = ref ? ref.unit : '';
+    const uc   = getUnitCost(row.refId, row.refType);
+    const sub  = uc !== null ? uc * row.amount : null;
+    if (sub !== null) totalCost += sub;
     totalWeight += row.amount;
-
     let priceStr = '—';
-    if (row.refType === 'material') {
-      const m = materials.find(x => x.id === row.refId);
-      if (m) priceStr = `$${m.price.toFixed(3)}`;
-    } else {
-      const r = recipes.find(x => x.id === row.refId);
-      if (r) priceStr = `$${calcRecipeCost(r).toFixed(3)}`;
-    }
+    if (row.refType === 'material') { const m = materials.find(x=>x.id===row.refId); if(m) priceStr=`$${m.price.toFixed(3)}`; }
+    else { const r = recipes.find(x=>x.id===row.refId); if(r) priceStr=`$${calcRecipeCost(r).toFixed(3)}`; }
     rows += `<tr>
-      <td>${refName} <span class="badge ${row.refType==='material'?'badge-material':'badge-semi'}">${row.refType==='material'?'原料':'半成品'}</span></td>
-      <td style="text-align:right">${priceStr}</td>
-      <td style="text-align:right">${refUnit}</td>
+      <td>${name} <span class="badge ${row.refType==='material'?'badge-material':'badge-semi'}">${row.refType==='material'?'原料':'半成品'}</span></td>
+      <td style="text-align:right">${priceStr}</td><td style="text-align:right">${unit}</td>
       <td style="text-align:right">${uc!==null?'$'+uc.toFixed(6):'—'}</td>
       <td style="text-align:right">${row.amount}</td>
-      <td style="text-align:right;font-weight:600;color:var(--accent)">${subtotal!==null?'$'+subtotal.toFixed(2):'—'}</td>
+      <td style="text-align:right;font-weight:600;color:var(--accent)">${sub!==null?'$'+sub.toFixed(2):'—'}</td>
     </tr>`;
   }
   const perUnit = totalCost / yieldAmt;
   document.getElementById('cost-table-body').innerHTML = rows;
   document.getElementById('cost-summary').innerHTML =
-    `<div><span style="font-size:11px;color:var(--muted)">原料總重量</span><br><strong>${totalWeight} ${yieldUnit}</strong></div>
+    `<div><span style="font-size:11px;color:var(--muted)">原料總重量</span><br><strong>${totalWeight}</strong></div>
      <div><span style="font-size:11px;color:var(--muted)">總成本</span><br><strong>$${totalCost.toFixed(2)}</strong></div>
      <div><span style="font-size:11px;color:var(--muted)">每 ${yieldUnit} 成本</span><br><strong style="color:var(--green);font-size:16px">$${perUnit.toFixed(4)}</strong></div>`;
   document.getElementById('recipe-cost-panel').style.display = 'block';
@@ -674,36 +734,35 @@ function saveRecipe() {
   const type      = document.getElementById('r-type').value;
   const yieldAmt  = parseFloat(document.getElementById('r-yield').value);
   const yieldUnit = document.getElementById('r-yield-unit').value;
-  if (!name) return alert('請輸入配方名稱');
-  if (!yieldAmt || yieldAmt <= 0) return alert('請輸入正確產出量');
+  if (!name)              return alert('請輸入配方名稱');
+  if (!yieldAmt||yieldAmt<=0) return alert('請輸入正確產出量');
   const valid = ingRows.filter(r => r.refId && r.amount > 0);
-  if (!valid.length) return alert('請至少加入一項食材（需選食材並填用量）');
-
+  if (!valid.length)      return alert('請至少加入一項食材');
   const data = { name, type, yield: yieldAmt, yieldUnit,
-    ingredients: valid.map(r => ({ refId: r.refId, refType: r.refType, amount: r.amount })) };
+    ingredients: valid.map(r => ({ refId:r.refId, refType:r.refType, amount:r.amount })) };
   if (editRecId) {
     const i = recipes.findIndex(x => x.id === editRecId);
     recipes[i] = { ...recipes[i], ...data };
   } else {
     recipes.push({ id: uid(), ...data });
   }
-  persist(); closeRecipeModal(); renderRecipes();
+  persist(); closeRecipeModal(); renderCurrentRecipeTab();
   toast(editRecId ? '配方已更新' : '配方已新增');
 }
 
 function deleteRecipe(id) {
-  if (recipes.some(r => r.ingredients.some(i => i.refId === id && i.refType === 'recipe')))
+  if (recipes.some(r => r.ingredients.some(i => i.refId===id && i.refType==='recipe')))
     return alert('此配方已被其他配方引用，無法刪除');
   const r = recipes.find(x => x.id === id);
   if (!confirm(`確定刪除「${r.name}」？`)) return;
   recipes = recipes.filter(x => x.id !== id);
-  persist(); renderRecipes();
+  persist(); renderCurrentRecipeTab();
 }
 
-function renderRecipes(search = '') {
+function renderRecipes(type, search = '') {
   const container = document.getElementById('recipes-list');
-  const empty = document.getElementById('recipes-empty');
-  const list = recipes.filter(r => r.name.includes(search));
+  const empty     = document.getElementById('recipes-empty');
+  const list = recipes.filter(r => r.type === type && r.name.includes(search));
   if (!list.length) { container.innerHTML = ''; empty.style.display = 'block'; return; }
   empty.style.display = 'none';
 
@@ -713,36 +772,28 @@ function renderRecipes(search = '') {
     const perUnit   = r.yield > 0 ? totalCost / r.yield : 0;
     let totalWeight = 0;
     const detailRows = r.ingredients.map(ing => {
-      const ref = opts.find(o => o.id === ing.refId);
+      const ref     = opts.find(o => o.id === ing.refId);
       const refName = ref ? ref.label.replace(/^\[.*?\] /, '') : '(已刪除)';
       const refUnit = ref ? ref.unit : '';
-      const uc = getUnitCost(ing.refId, ing.refType);
-      const subtotal = uc !== null ? uc * ing.amount : null;
-      totalWeight += ing.amount;
+      const uc      = getUnitCost(ing.refId, ing.refType);
+      const sub     = uc !== null ? uc * ing.amount : null;
+      totalWeight  += ing.amount;
       let priceStr = '—';
-      if (ing.refType === 'material') {
-        const m = materials.find(x => x.id === ing.refId);
-        if (m) priceStr = `$${m.price.toFixed(3)}`;
-      } else {
-        const rec = recipes.find(x => x.id === ing.refId);
-        if (rec) priceStr = `$${calcRecipeCost(rec).toFixed(3)}`;
-      }
+      if (ing.refType==='material') { const m=materials.find(x=>x.id===ing.refId); if(m) priceStr=`$${m.price.toFixed(3)}`; }
+      else { const rec=recipes.find(x=>x.id===ing.refId); if(rec) priceStr=`$${calcRecipeCost(rec).toFixed(3)}`; }
       return `<tr>
         <td>${refName} <span class="badge ${ing.refType==='material'?'badge-material':'badge-semi'}">${ing.refType==='material'?'原料':'半成品'}</span></td>
-        <td class="td-right">${priceStr}</td>
-        <td class="td-right">${refUnit}</td>
+        <td class="td-right">${priceStr}</td><td class="td-right">${refUnit}</td>
         <td class="td-right">${uc!==null?'$'+uc.toFixed(6):'—'}</td>
         <td class="td-right">${ing.amount}</td>
-        <td class="td-right" style="font-weight:600;color:var(--accent)">${subtotal!==null?'$'+subtotal.toFixed(2):'—'}</td>
+        <td class="td-right" style="font-weight:600;color:var(--accent)">${sub!==null?'$'+sub.toFixed(2):'—'}</td>
       </tr>`;
     }).join('');
 
     return `<div class="recipe-card">
       <div class="recipe-card-header" onclick="toggleCard('body-${r.id}','chev-${r.id}')">
         <div>
-          <div class="recipe-card-name">${r.name}
-            <span class="badge ${r.type==='semi'?'badge-semi':'badge-product'}">${r.type==='semi'?'半成品':'成品'}</span>
-          </div>
+          <div class="recipe-card-name">${r.name}</div>
           <div class="recipe-card-meta">產出 ${r.yield} ${r.yieldUnit}・${r.ingredients.length} 項食材</div>
         </div>
         <div class="flex-gap">
@@ -767,7 +818,7 @@ function renderRecipes(search = '') {
             <button class="btn btn-danger btn-sm" onclick="deleteRecipe('${r.id}')">刪除</button>
           </div>
           <div class="cost-stats">
-            <div class="cost-stat"><div class="label">原料重量</div><div class="value">${totalWeight} ${r.yieldUnit}</div></div>
+            <div class="cost-stat"><div class="label">原料重量</div><div class="value">${totalWeight}</div></div>
             <div class="cost-stat"><div class="label">總成本</div><div class="value">$${totalCost.toFixed(2)}</div></div>
             <div class="cost-stat"><div class="label">每 ${r.yieldUnit} 成本</div><div class="value accent">$${perUnit.toFixed(4)}</div></div>
           </div>
