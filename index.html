@@ -398,8 +398,11 @@ async function loadFromCloud() {
 async function saveToCloud() {
   setStatus('儲存中...', '');
   try {
-    const payload = encodeURIComponent(JSON.stringify({ materials, recipes }));
-    const res  = await fetch(`${GAS_URL}?action=save&data=${payload}`);
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'save', materials, recipes })
+    });
     const data = await res.json();
     if (data.error) throw new Error(data.error);
     setStatus('✓ 已儲存到雲端', 'ok');
