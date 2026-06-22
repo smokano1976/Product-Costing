@@ -25,13 +25,11 @@ header h1 { font-size: 15px; font-weight: 700; color: var(--accent); }
 .sync-status.ok { color: var(--green); }
 .sync-status.err { color: var(--danger); }
 
-/* tabs */
 .tabs { display: flex; background: var(--surface2); border-bottom: 1px solid var(--border); padding: 0 20px; }
 .tab-btn { padding: 10px 20px; border: none; background: none; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--muted); border-bottom: 2px solid transparent; transition: all 0.15s; margin-bottom: -1px; }
 .tab-btn:hover { color: var(--text); }
 .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: var(--surface); }
 
-/* sub-tabs inside recipe panel */
 .sub-tabs { display: flex; gap: 4px; margin-bottom: 16px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 4px; width: fit-content; }
 .sub-tab-btn { padding: 6px 18px; border: none; background: none; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--muted); border-radius: 6px; transition: all 0.15s; }
 .sub-tab-btn:hover { color: var(--text); }
@@ -43,7 +41,6 @@ header h1 { font-size: 15px; font-weight: 700; color: var(--accent); }
 .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
 .section-title { font-size: 15px; font-weight: 700; }
 
-/* buttons */
 .btn { display: inline-flex; align-items: center; gap: 5px; padding: 7px 14px; border-radius: var(--radius); border: none; cursor: pointer; font-size: 13px; font-weight: 500; transition: all 0.15s; white-space: nowrap; }
 .btn-primary { background: var(--accent); color: white; }
 .btn-primary:hover { background: var(--accent-dark); }
@@ -57,7 +54,6 @@ header h1 { font-size: 15px; font-weight: 700; color: var(--accent); }
 .btn-cloud:hover { background: #d4dffb; }
 .btn-sm { padding: 4px 10px; font-size: 12px; }
 
-/* table */
 .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
 table { width: 100%; border-collapse: collapse; }
 th { background: var(--surface2); text-align: left; padding: 9px 14px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); }
@@ -73,7 +69,6 @@ tr:hover td { background: #faf9f7; }
 .empty-state { text-align: center; padding: 40px 24px; color: var(--muted); }
 .empty-state p { margin-top: 6px; font-size: 13px; }
 
-/* modal */
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
 .modal-overlay.open { display: flex; }
 .modal { background: var(--surface); border-radius: 12px; box-shadow: var(--shadow-md); width: 100%; max-width: 580px; max-height: 90vh; overflow-y: auto; }
@@ -82,7 +77,6 @@ tr:hover td { background: #faf9f7; }
 .modal-body { padding: 18px 20px; }
 .modal-footer { padding: 12px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
 
-/* forms */
 .form-row { display: grid; gap: 12px; margin-bottom: 12px; }
 .form-row.cols2 { grid-template-columns: 1fr 1fr; }
 .form-row.cols3 { grid-template-columns: 1fr 1fr 1fr; }
@@ -95,7 +89,6 @@ tr:hover td { background: #faf9f7; }
 .unit-price-tip { background: var(--accent-light); border: 1px solid #f0c9a0; border-radius: var(--radius); padding: 7px 12px; font-size: 12px; margin-top: 6px; display: none; }
 .unit-price-tip strong { color: var(--accent); }
 
-/* ingredient editor */
 .ing-section-title { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin: 16px 0 6px; }
 .ing-header { display: grid; grid-template-columns: 1fr 90px 80px 90px 32px; gap: 6px; padding: 0 8px; margin-bottom: 3px; }
 .ing-header span { font-size: 11px; color: var(--muted); font-weight: 600; text-align: right; }
@@ -109,7 +102,6 @@ tr:hover td { background: #faf9f7; }
 .btn-del-ing { width: 28px; height: 28px; border-radius: 6px; border: none; background: var(--danger-light); color: var(--danger); cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .btn-del-ing:hover { background: #faddda; }
 
-/* cost preview */
 .cost-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-top: 14px; overflow: hidden; }
 .cost-panel-title { background: var(--surface2); padding: 7px 14px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
 .cost-table { width: 100%; border-collapse: collapse; font-size: 12px; }
@@ -118,7 +110,6 @@ tr:hover td { background: #faf9f7; }
 .cost-table tr:last-child td { border-bottom: none; }
 .cost-summary { padding: 10px 14px; background: var(--green-light); border-top: 1px solid #b8ddc9; display: flex; justify-content: space-between; align-items: center; }
 
-/* recipe cards */
 .recipe-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; overflow: hidden; box-shadow: var(--shadow); }
 .recipe-card-header { display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; cursor: pointer; transition: background 0.1s; }
 .recipe-card-header:hover { background: var(--surface2); }
@@ -130,6 +121,8 @@ tr:hover td { background: #faf9f7; }
 .recipe-card-body.open { display: block; }
 .recipe-detail-table { width: 100%; border-collapse: collapse; font-size: 12px; }
 .recipe-detail-table th { background: #faf9f7; padding: 6px 14px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; border-bottom: 1px solid var(--border); }
+.recipe-detail-table th.sortable { cursor: pointer; user-select: none; }
+.recipe-detail-table th.sortable:hover { color: var(--accent); }
 .recipe-detail-table td { padding: 8px 14px; border-bottom: 1px solid #f0ede8; }
 .recipe-detail-table tr:last-child td { border-bottom: none; }
 .recipe-detail-table .td-right { text-align: right; font-variant-numeric: tabular-nums; }
@@ -144,6 +137,7 @@ tr:hover td { background: #faf9f7; }
 .badge-semi { background: var(--accent-light); color: var(--accent); }
 .badge-product { background: var(--blue-light); color: var(--blue); }
 .badge-material { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+.badge-package { background: #eaf3ff; color: #2f6fb0; border: 1px solid #c9e0f7; }
 
 .search-bar { padding: 6px 12px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 13px; background: var(--surface); width: 180px; }
 .search-bar:focus { outline: none; border-color: var(--accent); }
@@ -176,12 +170,18 @@ tr:hover td { background: #faf9f7; }
 <!-- TAB: MATERIALS -->
 <div id="tab-materials" class="tab-panel active">
   <div class="section-header">
-    <div class="section-title">原料庫</div>
+    <div class="section-title">原料 / 包材庫</div>
     <div class="flex-gap">
-      <input class="search-bar" type="text" placeholder="搜尋原料或廠商..." oninput="renderMaterials(this.value)">
-      <button class="btn btn-primary" onclick="openMaterialModal()">＋ 新增原料</button>
+      <input class="search-bar" type="text" id="mat-search" placeholder="搜尋品名或廠商..." oninput="renderCurrentMatTab()">
+      <button class="btn btn-primary" onclick="openMaterialModal()">＋ 新增</button>
     </div>
   </div>
+
+  <div class="sub-tabs">
+    <button class="sub-tab-btn active" onclick="switchMatSubTab('material', this)">原料</button>
+    <button class="sub-tab-btn" onclick="switchMatSubTab('package', this)">包材</button>
+  </div>
+
   <div class="table-wrap">
     <table>
       <thead><tr>
@@ -197,7 +197,7 @@ tr:hover td { background: #faf9f7; }
     </table>
     <div id="materials-empty" class="empty-state" style="display:none">
       <div style="font-size:32px">📦</div>
-      <p>尚無原料，點選「新增原料」開始建立</p>
+      <p>尚無資料，點選「新增」開始建立</p>
     </div>
   </div>
 </div>
@@ -212,7 +212,6 @@ tr:hover td { background: #faf9f7; }
     </div>
   </div>
 
-  <!-- sub-tabs: 半成品 / 成品 -->
   <div class="sub-tabs">
     <button class="sub-tab-btn active" onclick="switchSubTab('semi', this)">半成品</button>
     <button class="sub-tab-btn" onclick="switchSubTab('product', this)">成品</button>
@@ -233,10 +232,19 @@ tr:hover td { background: #faf9f7; }
       <button class="close-btn" onclick="closeMaterialModal()">✕</button>
     </div>
     <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>類別</label>
+          <select id="m-category">
+            <option value="material">原料</option>
+            <option value="package">包材</option>
+          </select>
+        </div>
+      </div>
       <div class="form-row cols2">
         <div class="form-group">
           <label>品名</label>
-          <input type="text" id="m-name" placeholder="例：細砂糖">
+          <input type="text" id="m-name" placeholder="例：細砂糖 / 玻璃瓶">
         </div>
         <div class="form-group">
           <label>廠商</label>
@@ -264,6 +272,8 @@ tr:hover td { background: #faf9f7; }
             <option value="顆">顆</option>
             <option value="份">份</option>
             <option value="包">包</option>
+            <option value="支">支</option>
+            <option value="組">組</option>
           </select>
         </div>
       </div>
@@ -315,7 +325,7 @@ tr:hover td { background: #faf9f7; }
         </div>
       </div>
 
-      <div class="ing-section-title">食材組成</div>
+      <div class="ing-section-title">食材組成（原料 / 包材 / 半成品）</div>
       <div class="ing-header">
         <span>食材</span><span>用量</span><span>單價</span><span>小計</span><span></span>
       </div>
@@ -346,22 +356,24 @@ tr:hover td { background: #faf9f7; }
 
 <script>
 // ══════════════════════════════════════════
-//  CONFIG — 把 GAS URL 填在這裡
+//  CONFIG
 // ══════════════════════════════════════════
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwZldlhrSsHiH2BZjNSik0wcwKWS2gTgV3A-yh3UUOztGW5icVBoCoR7rbtcpiQOGkP/exec';
 
 // ══════════════════════════════════════════
 //  DATA
+//  materials now include `category`: 'material' | 'package'
 // ══════════════════════════════════════════
-let materials = JSON.parse(localStorage.getItem('cost_v4_materials') || '[]');
-let recipes   = JSON.parse(localStorage.getItem('cost_v4_recipes')   || '[]');
+let materials = JSON.parse(localStorage.getItem('cost_v5_materials') || '[]');
+let recipes   = JSON.parse(localStorage.getItem('cost_v5_recipes')   || '[]');
 let editMatId = null, editRecId = null;
 let ingRows   = [];
-let currentSubTab = 'semi'; // 'semi' | 'product'
+let currentSubTab = 'semi';       // recipes: 'semi' | 'product'
+let currentMatTab = 'material';   // materials: 'material' | 'package'
 
 function persist() {
-  localStorage.setItem('cost_v4_materials', JSON.stringify(materials));
-  localStorage.setItem('cost_v4_recipes',   JSON.stringify(recipes));
+  localStorage.setItem('cost_v5_materials', JSON.stringify(materials));
+  localStorage.setItem('cost_v5_recipes',   JSON.stringify(recipes));
 }
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
 function toast(msg) {
@@ -376,6 +388,15 @@ function setStatus(msg, cls) {
 }
 
 // ══════════════════════════════════════════
+//  MIGRATION: 舊資料沒有 category 欄位 → 預設為 material
+// ══════════════════════════════════════════
+(function migrate() {
+  let changed = false;
+  materials.forEach(m => { if (!m.category) { m.category = 'material'; changed = true; } });
+  if (changed) persist();
+})();
+
+// ══════════════════════════════════════════
 //  CLOUD SYNC
 // ══════════════════════════════════════════
 async function loadFromCloud() {
@@ -384,10 +405,10 @@ async function loadFromCloud() {
     const res  = await fetch(GAS_URL + '?action=load');
     const data = await res.json();
     if (data.error) throw new Error(data.error);
-    materials = data.materials || [];
+    materials = (data.materials || []).map(m => ({ ...m, category: m.category || 'material' }));
     recipes   = data.recipes   || [];
     persist();
-    renderMaterials(); renderCurrentRecipeTab();
+    renderCurrentMatTab(); renderCurrentRecipeTab();
     setStatus('✓ 雲端載入成功', 'ok');
     toast('已從雲端載入資料');
   } catch(e) {
@@ -421,19 +442,27 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   btn.classList.add('active');
-  name === 'materials' ? renderMaterials() : renderCurrentRecipeTab();
+  name === 'materials' ? renderCurrentMatTab() : renderCurrentRecipeTab();
 }
-
 function switchSubTab(type, btn) {
   currentSubTab = type;
-  document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.parentElement.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderCurrentRecipeTab();
 }
-
+function switchMatSubTab(cat, btn) {
+  currentMatTab = cat;
+  btn.parentElement.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCurrentMatTab();
+}
 function renderCurrentRecipeTab() {
   const search = document.getElementById('recipe-search')?.value || '';
   renderRecipes(currentSubTab, search);
+}
+function renderCurrentMatTab() {
+  const search = document.getElementById('mat-search')?.value || '';
+  renderMaterials(search);
 }
 
 // ══════════════════════════════════════════
@@ -443,7 +472,7 @@ function unitPrice(m) {
   return (m.price > 0 && m.capacity > 0) ? m.price / m.capacity : null;
 }
 function getUnitCost(refId, refType) {
-  if (refType === 'material') {
+  if (refType === 'material' || refType === 'package') {
     const m = materials.find(x => x.id === refId);
     return m ? unitPrice(m) : null;
   }
@@ -462,43 +491,36 @@ function calcRecipeCost(r) {
 }
 
 // ══════════════════════════════════════════
-//  MATERIALS
+//  MATERIALS (原料 + 包材)
 // ══════════════════════════════════════════
-let matSortField = null;   // 'name' | 'vendor' | null
-let matSortDir = 'asc';    // 'asc' | 'desc'
-let matLastSearch = '';
+let matSortField = null;
+let matSortDir = 'asc';
 
 function toggleSort(field) {
-  if (matSortField === field) {
-    matSortDir = matSortDir === 'asc' ? 'desc' : 'asc';
-  } else {
-    matSortField = field;
-    matSortDir = 'asc';
-  }
-  renderMaterials(matLastSearch);
+  if (matSortField === field) matSortDir = matSortDir === 'asc' ? 'desc' : 'asc';
+  else { matSortField = field; matSortDir = 'asc'; }
+  renderCurrentMatTab();
 }
-
 function updateSortIcons() {
   ['name', 'vendor'].forEach(f => {
     const el = document.getElementById('sort-' + f);
     if (!el) return;
-    if (matSortField === f) el.textContent = matSortDir === 'asc' ? '▲' : '▼';
-    else el.textContent = '';
+    el.textContent = matSortField === f ? (matSortDir === 'asc' ? '▲' : '▼') : '';
   });
 }
 
 function renderMaterials(search = '') {
-  matLastSearch = search;
   const tbody = document.getElementById('materials-tbody');
   const empty = document.getElementById('materials-empty');
-  let list  = materials.filter(m =>
-    m.name.includes(search) || (m.vendor || '').includes(search)
+  let list = materials.filter(m =>
+    m.category === currentMatTab &&
+    (m.name.includes(search) || (m.vendor || '').includes(search))
   );
 
   if (matSortField) {
     list = [...list].sort((a, b) => {
-      const va = (matSortField === 'vendor' ? (a.vendor || '') : a.name).toLocaleLowerCase('zh-Hant');
-      const vb = (matSortField === 'vendor' ? (b.vendor || '') : b.name).toLocaleLowerCase('zh-Hant');
+      const va = (matSortField === 'vendor' ? (a.vendor || '') : a.name);
+      const vb = (matSortField === 'vendor' ? (b.vendor || '') : b.name);
       const cmp = va.localeCompare(vb, 'zh-Hant');
       return matSortDir === 'asc' ? cmp : -cmp;
     });
@@ -526,19 +548,21 @@ function renderMaterials(search = '') {
 
 function openMaterialModal(id = null) {
   editMatId = id;
-  document.getElementById('mat-modal-title').textContent = id ? '編輯原料' : '新增原料';
+  document.getElementById('mat-modal-title').textContent = id ? '編輯項目' : '新增項目';
   document.getElementById('unit-price-tip').style.display = 'none';
   if (id) {
     const m = materials.find(x => x.id === id);
-    document.getElementById('m-name').value     = m.name;
-    document.getElementById('m-vendor').value   = m.vendor || '';
-    document.getElementById('m-price').value    = m.price;
-    document.getElementById('m-capacity').value = m.capacity;
-    document.getElementById('m-unit').value     = m.unit;
+    document.getElementById('m-category').value = m.category || 'material';
+    document.getElementById('m-name').value      = m.name;
+    document.getElementById('m-vendor').value    = m.vendor || '';
+    document.getElementById('m-price').value     = m.price;
+    document.getElementById('m-capacity').value  = m.capacity;
+    document.getElementById('m-unit').value      = m.unit;
     previewUnitPrice();
   } else {
     ['m-name','m-vendor','m-price','m-capacity'].forEach(i => document.getElementById(i).value = '');
-    document.getElementById('m-unit').value = 'g';
+    document.getElementById('m-unit').value     = 'g';
+    document.getElementById('m-category').value = currentMatTab; // 預設跟目前子分頁一致
   }
   document.getElementById('material-modal').classList.add('open');
   setTimeout(() => document.getElementById('m-name').focus(), 80);
@@ -558,30 +582,31 @@ function previewUnitPrice() {
   } else { tip.style.display = 'none'; }
 }
 function saveMaterial() {
+  const category = document.getElementById('m-category').value;
   const name     = document.getElementById('m-name').value.trim();
   const vendor   = document.getElementById('m-vendor').value.trim();
   const price    = parseFloat(document.getElementById('m-price').value);
   const capacity = parseFloat(document.getElementById('m-capacity').value);
   const unit     = document.getElementById('m-unit').value;
-  if (!name)               return alert('請輸入品名');
-  if (!price || price <= 0)    return alert('請輸入正確進價');
-  if (!capacity || capacity<=0) return alert('請輸入正確容量');
+  if (!name)                     return alert('請輸入品名');
+  if (!price || price <= 0)          return alert('請輸入正確進價');
+  if (!capacity || capacity <= 0)    return alert('請輸入正確容量');
   if (editMatId) {
     const i = materials.findIndex(x => x.id === editMatId);
-    materials[i] = { ...materials[i], name, vendor, price, capacity, unit };
+    materials[i] = { ...materials[i], category, name, vendor, price, capacity, unit };
   } else {
-    materials.push({ id: uid(), name, vendor, price, capacity, unit });
+    materials.push({ id: uid(), category, name, vendor, price, capacity, unit });
   }
-  persist(); closeMaterialModal(); renderMaterials();
-  toast(editMatId ? '原料已更新' : '原料已新增');
+  persist(); closeMaterialModal(); renderCurrentMatTab();
+  toast(editMatId ? '已更新' : '已新增');
 }
 function deleteMaterial(id) {
-  if (recipes.some(r => r.ingredients.some(i => i.refId === id && i.refType === 'material')))
-    return alert('此原料已被配方引用，無法刪除');
+  if (recipes.some(r => r.ingredients.some(i => i.refId === id && (i.refType === 'material' || i.refType === 'package'))))
+    return alert('此項目已被配方引用，無法刪除');
   const m = materials.find(x => x.id === id);
   if (!confirm(`確定刪除「${m.name}」？`)) return;
   materials = materials.filter(x => x.id !== id);
-  persist(); renderMaterials();
+  persist(); renderCurrentMatTab();
 }
 
 // ══════════════════════════════════════════
@@ -589,23 +614,32 @@ function deleteMaterial(id) {
 // ══════════════════════════════════════════
 function getRefOptions(excludeId = null) {
   return [
-    ...materials.map(m => ({ id: m.id, type: 'material', label: `[原料] ${m.name}`, unit: m.unit })),
+    ...materials.filter(m => m.category === 'material')
+                .map(m => ({ id: m.id, type: 'material', label: `[原料] ${m.name}`, unit: m.unit })),
+    ...materials.filter(m => m.category === 'package')
+                .map(m => ({ id: m.id, type: 'package', label: `[包材] ${m.name}`, unit: m.unit })),
     ...recipes.filter(r => r.type === 'semi' && r.id !== excludeId)
                .map(r => ({ id: r.id, type: 'recipe', label: `[半成品] ${r.name}`, unit: r.yieldUnit }))
   ];
 }
-function addIngRow(ing = null) {
-  const rowId = uid();
-  ingRows.push({ rowId, refId: ing?.refId || '', refType: ing?.refType || 'material', amount: ing?.amount ?? 0 });
-  appendIngRowDOM(ingRows.length - 1, rowId, ing?.refId || '', ing?.refType || 'material', ing?.amount ?? '');
+function getRefTypeLabel(type) {
+  return type === 'material' ? '原料' : type === 'package' ? '包材' : '半成品';
+}
+function getRefBadgeClass(type) {
+  return type === 'material' ? 'badge-material' : type === 'package' ? 'badge-package' : 'badge-semi';
 }
 function getVendorStr(refId, refType) {
-  if (refType !== 'material') return '';
+  if (refType !== 'material' && refType !== 'package') return '';
   const m = materials.find(x => x.id === refId);
   return (m && m.vendor) ? m.vendor : '';
 }
 
-function appendIngRowDOM(idx, rowId, refId, refType, amount) {
+function addIngRow(ing = null) {
+  const rowId = uid();
+  ingRows.push({ rowId, refId: ing?.refId || '', refType: ing?.refType || 'material', amount: ing?.amount ?? 0 });
+  appendIngRowDOM(rowId, ing?.refId || '', ing?.refType || 'material', ing?.amount ?? '');
+}
+function appendIngRowDOM(rowId, refId, refType, amount) {
   const opts = getRefOptions(editRecId);
   const selOpts = opts.map(o =>
     `<option value="${o.id}|${o.type}" ${refId === o.id ? 'selected' : ''}>${o.label}</option>`
@@ -684,7 +718,7 @@ function openRecipeModal(id = null) {
     r.ingredients.forEach(ing => addIngRow(ing));
   } else {
     ['r-name','r-yield'].forEach(i => document.getElementById(i).value = '');
-    document.getElementById('r-type').value       = currentSubTab; // 預設跟目前分頁一致
+    document.getElementById('r-type').value       = currentSubTab;
     document.getElementById('r-yield-unit').value = 'g';
   }
   document.getElementById('recipe-modal').classList.add('open');
@@ -713,10 +747,10 @@ function calcAndPreview() {
     if (sub !== null) totalCost += sub;
     totalWeight += row.amount;
     let priceStr = '—';
-    if (row.refType === 'material') { const m = materials.find(x=>x.id===row.refId); if(m) priceStr=`$${m.price.toFixed(3)}`; }
-    else { const r = recipes.find(x=>x.id===row.refId); if(r) priceStr=`$${calcRecipeCost(r).toFixed(3)}`; }
+    if (row.refType === 'recipe') { const r = recipes.find(x=>x.id===row.refId); if(r) priceStr=`$${calcRecipeCost(r).toFixed(3)}`; }
+    else { const m = materials.find(x=>x.id===row.refId); if(m) priceStr=`$${m.price.toFixed(3)}`; }
     rows += `<tr>
-      <td>${name} <span class="badge ${row.refType==='material'?'badge-material':'badge-semi'}">${row.refType==='material'?'原料':'半成品'}</span></td>
+      <td>${name} <span class="badge ${getRefBadgeClass(row.refType)}">${getRefTypeLabel(row.refType)}</span></td>
       <td style="text-align:right">${priceStr}</td><td style="text-align:right">${unit}</td>
       <td style="text-align:right">${uc!==null?'$'+uc.toFixed(6):'—'}</td>
       <td style="text-align:right">${row.amount}</td>
@@ -737,10 +771,10 @@ function saveRecipe() {
   const type      = document.getElementById('r-type').value;
   const yieldAmt  = parseFloat(document.getElementById('r-yield').value);
   const yieldUnit = document.getElementById('r-yield-unit').value;
-  if (!name)              return alert('請輸入配方名稱');
+  if (!name)               return alert('請輸入配方名稱');
   if (!yieldAmt||yieldAmt<=0) return alert('請輸入正確產出量');
   const valid = ingRows.filter(r => r.refId && r.amount > 0);
-  if (!valid.length)      return alert('請至少加入一項食材');
+  if (!valid.length)       return alert('請至少加入一項食材');
   const data = { name, type, yield: yieldAmt, yieldUnit,
     ingredients: valid.map(r => ({ refId:r.refId, refType:r.refType, amount:r.amount })) };
   if (editRecId) {
@@ -762,6 +796,38 @@ function deleteRecipe(id) {
   persist(); renderCurrentRecipeTab();
 }
 
+// ── 配方明細排序：每張卡片獨立排序狀態 ──
+let detailSort = {}; // { [recipeId]: { field, dir } }
+
+function toggleDetailSort(recipeId, field) {
+  const cur = detailSort[recipeId] || { field: null, dir: 'asc' };
+  if (cur.field === field) cur.dir = cur.dir === 'asc' ? 'desc' : 'asc';
+  else { cur.field = field; cur.dir = 'asc'; }
+  detailSort[recipeId] = cur;
+  renderCurrentRecipeTab();
+}
+
+function sortIngredientRows(recipeId, rowsData) {
+  const sort = detailSort[recipeId];
+  if (!sort || !sort.field) return rowsData;
+  const { field, dir } = sort;
+  const sorted = [...rowsData].sort((a, b) => {
+    let va = a[field], vb = b[field];
+    if (typeof va === 'string') {
+      const cmp = va.localeCompare(vb, 'zh-Hant');
+      return dir === 'asc' ? cmp : -cmp;
+    }
+    return dir === 'asc' ? va - vb : vb - va;
+  });
+  return sorted;
+}
+
+function detailSortIcon(recipeId, field) {
+  const s = detailSort[recipeId];
+  if (!s || s.field !== field) return '';
+  return s.dir === 'asc' ? ' ▲' : ' ▼';
+}
+
 function renderRecipes(type, search = '') {
   const container = document.getElementById('recipes-list');
   const empty     = document.getElementById('recipes-empty');
@@ -774,24 +840,31 @@ function renderRecipes(type, search = '') {
     const totalCost = calcRecipeCost(r);
     const perUnit   = r.yield > 0 ? totalCost / r.yield : 0;
     let totalWeight = 0;
-    const detailRows = r.ingredients.map(ing => {
+
+    // 計算每個食材的明細資料
+    let rowsData = r.ingredients.map(ing => {
       const ref     = opts.find(o => o.id === ing.refId);
       const refName = ref ? ref.label.replace(/^\[.*?\] /, '') : '(已刪除)';
       const refUnit = ref ? ref.unit : '';
       const uc      = getUnitCost(ing.refId, ing.refType);
-      const sub     = uc !== null ? uc * ing.amount : null;
+      const sub     = uc !== null ? uc * ing.amount : 0;
       totalWeight  += ing.amount;
-      let priceStr = '—';
-      if (ing.refType==='material') { const m=materials.find(x=>x.id===ing.refId); if(m) priceStr=`$${m.price.toFixed(3)}`; }
-      else { const rec=recipes.find(x=>x.id===ing.refId); if(rec) priceStr=`$${calcRecipeCost(rec).toFixed(3)}`; }
-      return `<tr>
-        <td>${refName} <span class="badge ${ing.refType==='material'?'badge-material':'badge-semi'}">${ing.refType==='material'?'原料':'半成品'}</span></td>
-        <td class="td-right">${priceStr}</td><td class="td-right">${refUnit}</td>
-        <td class="td-right">${uc!==null?'$'+uc.toFixed(6):'—'}</td>
-        <td class="td-right">${ing.amount}</td>
-        <td class="td-right" style="font-weight:600;color:var(--accent)">${sub!==null?'$'+sub.toFixed(2):'—'}</td>
-      </tr>`;
-    }).join('');
+      let price = 0;
+      if (ing.refType === 'recipe') { const rec=recipes.find(x=>x.id===ing.refId); if(rec) price=calcRecipeCost(rec); }
+      else { const m=materials.find(x=>x.id===ing.refId); if(m) price=m.price; }
+      return { name: refName, unit: refUnit, price, unitCost: uc ?? 0, amount: ing.amount, subtotal: sub, refType: ing.refType };
+    });
+
+    rowsData = sortIngredientRows(r.id, rowsData);
+
+    const detailRows = rowsData.map(row => `<tr>
+        <td>${row.name} <span class="badge ${getRefBadgeClass(row.refType)}">${getRefTypeLabel(row.refType)}</span></td>
+        <td class="td-right">$${row.price.toFixed(3)}</td>
+        <td class="td-right">${row.unit}</td>
+        <td class="td-right">$${row.unitCost.toFixed(6)}</td>
+        <td class="td-right">${row.amount}</td>
+        <td class="td-right" style="font-weight:600;color:var(--accent)">$${row.subtotal.toFixed(2)}</td>
+      </tr>`).join('');
 
     return `<div class="recipe-card">
       <div class="recipe-card-header" onclick="toggleCard('body-${r.id}','chev-${r.id}')">
@@ -810,8 +883,12 @@ function renderRecipes(type, search = '') {
       <div class="recipe-card-body" id="body-${r.id}">
         <table class="recipe-detail-table">
           <thead><tr>
-            <th>食材</th><th class="td-right">進價</th><th class="td-right">單位</th>
-            <th class="td-right">單價</th><th class="td-right">用量</th><th class="td-right">小計</th>
+            <th class="sortable" onclick="toggleDetailSort('${r.id}','name')">食材${detailSortIcon(r.id,'name')}</th>
+            <th class="td-right sortable" onclick="toggleDetailSort('${r.id}','price')">進價${detailSortIcon(r.id,'price')}</th>
+            <th class="td-right">單位</th>
+            <th class="td-right sortable" onclick="toggleDetailSort('${r.id}','unitCost')">單價${detailSortIcon(r.id,'unitCost')}</th>
+            <th class="td-right sortable" onclick="toggleDetailSort('${r.id}','amount')">用量${detailSortIcon(r.id,'amount')}</th>
+            <th class="td-right sortable" onclick="toggleDetailSort('${r.id}','subtotal')">小計${detailSortIcon(r.id,'subtotal')}</th>
           </tr></thead>
           <tbody>${detailRows}</tbody>
         </table>
@@ -839,7 +916,7 @@ function toggleCard(bodyId, chevId) {
 // ══════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════
-renderMaterials();
+renderCurrentMatTab();
 </script>
 </body>
 </html>
