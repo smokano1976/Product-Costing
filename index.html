@@ -788,7 +788,7 @@ function calcAndPreview() {
     if (row.refType === 'recipe') { const r = recipes.find(x=>x.id===row.refId); if(r) priceStr=`$${calcRecipeCost(r).toFixed(3)}`; }
     else { const m = materials.find(x=>x.id===row.refId); if(m) priceStr=`$${m.price.toFixed(3)}`; }
     rows += `<tr>
-      <td>${name} <span class="badge ${getRefBadgeClass(row.refType)}">${getRefTypeLabel(row.refType)}</span></td>
+      <td><span class="badge ${getRefBadgeClass(row.refType)}">${getRefTypeLabel(row.refType)}</span> ${name}</td>
       <td style="text-align:right">${priceStr}</td><td style="text-align:right">${unit}</td>
       <td style="text-align:right">${uc!==null?'$'+uc.toFixed(6):'—'}</td>
       <td style="text-align:right">${row.amount}</td>
@@ -849,7 +849,17 @@ function sortIngredientRows(recipeId, rowsData) {
   const sort = detailSort[recipeId];
   if (!sort || !sort.field) return rowsData;
   const { field, dir } = sort;
+  const typeOrder = { material: 0, package: 1, recipe: 2 };
+
   const sorted = [...rowsData].sort((a, b) => {
+    // 點「食材」欄排序時：先依分類（原料/包材/半成品）分組，組內再依品名排序
+    if (field === 'name') {
+      const groupCmp = (typeOrder[a.refType] ?? 9) - (typeOrder[b.refType] ?? 9);
+      const finalGroupCmp = dir === 'asc' ? groupCmp : -groupCmp;
+      if (finalGroupCmp !== 0) return finalGroupCmp;
+      return a.name.localeCompare(b.name, 'zh-Hant');
+    }
+    // 其他數值欄位：純數值排序，不分組
     let va = a[field], vb = b[field];
     if (typeof va === 'string') {
       const cmp = va.localeCompare(vb, 'zh-Hant');
@@ -899,7 +909,7 @@ function renderRecipes(type, search = '') {
     rowsData = sortIngredientRows(r.id, rowsData);
 
     const detailRows = rowsData.map(row => `<tr>
-        <td>${row.name} <span class="badge ${getRefBadgeClass(row.refType)}">${getRefTypeLabel(row.refType)}</span></td>
+        <td><span class="badge ${getRefBadgeClass(row.refType)}">${getRefTypeLabel(row.refType)}</span> ${row.name}</td>
         <td class="td-right">$${row.price.toFixed(3)}</td>
         <td class="td-right">${row.unit}</td>
         <td class="td-right">$${row.unitCost.toFixed(6)}</td>
