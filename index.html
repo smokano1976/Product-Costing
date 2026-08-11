@@ -90,19 +90,25 @@ tr:hover td { background: #faf9f7; }
 .unit-price-tip strong { color: var(--accent); }
 
 .ing-section-title { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin: 16px 0 6px; }
-.ing-header { display: grid; grid-template-columns: 24px 1fr 90px 80px 90px 32px; gap: 6px; padding: 0 8px; margin-bottom: 3px; }
-.ing-header span { font-size: 11px; color: var(--muted); font-weight: 600; text-align: right; }
-.ing-header span:nth-child(2) { text-align: left; }
-.ing-move { display: flex; flex-direction: column; gap: 1px; }
+.ing-header { display: none; }
+.ing-move { display: flex; flex-direction: column; gap: 1px; flex-shrink: 0; }
 .ing-move button { width: 22px; height: 16px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); border-radius: 3px; cursor: pointer; font-size: 9px; line-height: 1; display: flex; align-items: center; justify-content: center; padding: 0; }
 .ing-move button:hover:not(:disabled) { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
 .ing-move button:disabled { opacity: 0.25; cursor: not-allowed; }
-.ing-row { display: grid; grid-template-columns: 24px 1fr 90px 80px 90px 32px; gap: 6px; align-items: center; margin-bottom: 6px; padding: 8px; background: var(--surface2); border-radius: var(--radius); border: 1px solid var(--border); }
-.ing-row select, .ing-row input[type=number] { padding: 5px 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 12px; background: var(--surface); color: var(--text); width: 100%; }
-.ing-row select:focus, .ing-row input:focus { outline: none; border-color: var(--accent); }
+.ing-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; padding: 10px 12px; background: var(--surface2); border-radius: var(--radius); border: 1px solid var(--border); }
+.ing-row-top { display: flex; align-items: flex-start; gap: 8px; }
+.ing-row-top select { flex: 1; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; background: var(--surface); color: var(--text); min-width: 0; }
+.ing-row-top select:focus { outline: none; border-color: var(--accent); }
+.ing-row-bottom { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 32px; gap: 6px; align-items: center; margin-left: 30px; }
+.ing-num-group { display: flex; flex-direction: column; gap: 2px; }
+.ing-num-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
+.ing-num-val { font-size: 12px; text-align: right; padding: 4px 6px; background: var(--surface); border-radius: 4px; border: 1px solid var(--border); }
+.ing-row-bottom input[type=number] { padding: 5px 6px; border: 1px solid var(--border); border-radius: 6px; font-size: 12px; background: var(--surface); color: var(--text); width: 100%; text-align: right; }
+.ing-row-bottom input[type=number]:focus { outline: none; border-color: var(--accent); }
 .ing-vendor { font-size: 11px; color: var(--muted); margin-top: 3px; padding-left: 2px; min-height: 14px; }
 .ing-unit-cost { font-size: 12px; color: var(--muted); text-align: right; }
 .ing-subtotal { font-size: 12px; font-weight: 600; color: var(--accent); text-align: right; }
+.ing-loss-subtotal { font-size: 12px; font-weight: 700; color: var(--green); text-align: right; }
 .btn-del-ing { width: 28px; height: 28px; border-radius: 6px; border: none; background: var(--danger-light); color: var(--danger); cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .btn-del-ing:hover { background: #faddda; }
 
@@ -330,13 +336,17 @@ tr:hover td { background: #faf9f7; }
       </div>
 
       <div class="ing-section-title">食材組成（原料 / 包材 / 半成品）</div>
-      <div class="ing-header">
-        <span style="width:24px"></span><span>食材</span><span>用量</span><span>單價</span><span>小計</span><span></span>
-      </div>
       <div id="ing-editor"></div>
       <div class="flex-gap" style="margin-top:6px">
         <button class="btn btn-ghost btn-sm" onclick="addIngRow()">＋ 新增食材</button>
         <button class="btn btn-ghost btn-sm" onclick="sortIngByCategory()">📑 依類別排序</button>
+      </div>
+      <div class="form-row cols2" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+        <div class="form-group">
+          <label>配方整體耗損率（%）</label>
+          <input type="number" id="r-loss" placeholder="0" min="0" max="99" step="0.1" value="0">
+          <span style="font-size:11px;color:var(--muted)">0% = 無耗損；20% = 良率80%</span>
+        </div>
       </div>
 
       <div id="recipe-cost-panel" class="cost-panel" style="display:none">
@@ -344,7 +354,8 @@ tr:hover td { background: #faf9f7; }
         <table class="cost-table">
           <thead><tr>
             <th>食材</th><th style="text-align:right">進價</th><th style="text-align:right">單位</th>
-            <th style="text-align:right">單價</th><th style="text-align:right">用量</th><th style="text-align:right">小計</th>
+            <th style="text-align:right">單價</th><th style="text-align:right">用量</th>
+            <th style="text-align:right">小計</th><th style="text-align:right">耗損率%</th><th style="text-align:right">耗損後小計</th>
           </tr></thead>
           <tbody id="cost-table-body"></tbody>
         </table>
@@ -643,7 +654,7 @@ function getVendorStr(refId, refType) {
 
 function addIngRow(ing = null) {
   const rowId = uid();
-  ingRows.push({ rowId, refId: ing?.refId || '', refType: ing?.refType || 'material', amount: ing?.amount ?? 0 });
+  ingRows.push({ rowId, refId: ing?.refId || '', refType: ing?.refType || 'material', amount: ing?.amount ?? 0, lossRate: ing?.lossRate ?? 0 });
   renderIngEditor();
 }
 
@@ -652,11 +663,16 @@ function renderIngEditor() {
   const container = document.getElementById('ing-editor');
   container.innerHTML = '';
   ingRows.forEach((row, idx) => {
-    appendIngRowDOM(row.rowId, row.refId, row.refType, row.amount, idx, ingRows.length);
+    appendIngRowDOM(row.rowId, row.refId, row.refType, row.amount, row.lossRate ?? 0, idx, ingRows.length);
   });
 }
 
-function appendIngRowDOM(rowId, refId, refType, amount, idx, total) {
+function calcLossSubtotal(subtotal, lossRate) {
+  if (!subtotal || lossRate >= 100) return null;
+  return subtotal / (1 - lossRate / 100);
+}
+
+function appendIngRowDOM(rowId, refId, refType, amount, lossRate, idx, total) {
   const opts = getRefOptions(editRecId);
   const selOpts = opts.map(o =>
     `<option value="${o.id}|${o.type}" ${refId === o.id ? 'selected' : ''}>${o.label}</option>`
@@ -664,26 +680,51 @@ function appendIngRowDOM(rowId, refId, refType, amount, idx, total) {
   const selRef = opts.find(o => o.id === refId);
   const uc = selRef ? getUnitCost(refId, refType) : null;
   const ucStr = uc !== null ? '$' + uc.toFixed(4) : '—';
-  const stStr = (uc !== null && amount > 0) ? '$' + (uc * parseFloat(amount)).toFixed(2) : '—';
+  const subtotal = (uc !== null && amount > 0) ? uc * parseFloat(amount) : null;
+  const stStr = subtotal !== null ? '$' + subtotal.toFixed(2) : '—';
+  const lossSub = subtotal !== null ? calcLossSubtotal(subtotal, lossRate ?? 0) : null;
+  const lossSubStr = lossSub !== null ? '$' + lossSub.toFixed(2) : '—';
   const vendor = getVendorStr(refId, refType);
   const div = document.createElement('div');
   div.className = 'ing-row'; div.dataset.rowid = rowId;
   div.innerHTML = `
-    <div class="ing-move">
-      <button onclick="moveIngRow('${rowId}',-1)" ${idx === 0 ? 'disabled' : ''} title="上移">▲</button>
-      <button onclick="moveIngRow('${rowId}',1)" ${idx === total - 1 ? 'disabled' : ''} title="下移">▼</button>
+    <div class="ing-row-top">
+      <div class="ing-move">
+        <button onclick="moveIngRow('${rowId}',-1)" ${idx === 0 ? 'disabled' : ''} title="上移">▲</button>
+        <button onclick="moveIngRow('${rowId}',1)" ${idx === total - 1 ? 'disabled' : ''} title="下移">▼</button>
+      </div>
+      <div style="flex:1;min-width:0">
+        <select onchange="ingRefChange(this,'${rowId}')">
+          <option value="">選擇食材...</option>${selOpts}
+        </select>
+        <div class="ing-vendor" id="vendor-${rowId}">${vendor ? '🏭 ' + vendor : ''}</div>
+      </div>
+      <button class="btn-del-ing" onclick="removeIngRow('${rowId}')">✕</button>
     </div>
-    <div>
-      <select onchange="ingRefChange(this,'${rowId}')">
-        <option value="">選擇食材...</option>${selOpts}
-      </select>
-      <div class="ing-vendor" id="vendor-${rowId}">${vendor ? '🏭 ' + vendor : ''}</div>
-    </div>
-    <input type="number" min="0" step="0.001" placeholder="用量" value="${amount || ''}"
-      oninput="ingAmtInput(this,'${rowId}')" onblur="ingAmtBlur(this,'${rowId}')">
-    <div class="ing-unit-cost" id="uc-${rowId}">${ucStr}</div>
-    <div class="ing-subtotal" id="st-${rowId}">${stStr}</div>
-    <button class="btn-del-ing" onclick="removeIngRow('${rowId}')">✕</button>`;
+    <div class="ing-row-bottom">
+      <div class="ing-num-group">
+        <div class="ing-num-label">用量</div>
+        <input type="number" min="0" step="0.001" placeholder="0" value="${amount || ''}"
+          oninput="ingAmtInput(this,'${rowId}')" onblur="ingAmtBlur(this,'${rowId}')">
+      </div>
+      <div class="ing-num-group">
+        <div class="ing-num-label">單價</div>
+        <div class="ing-num-val ing-unit-cost" id="uc-${rowId}">${ucStr}</div>
+      </div>
+      <div class="ing-num-group">
+        <div class="ing-num-label">小計</div>
+        <div class="ing-num-val ing-subtotal" id="st-${rowId}">${stStr}</div>
+      </div>
+      <div class="ing-num-group">
+        <div class="ing-num-label">耗損率%</div>
+        <input type="number" min="0" max="99.9" step="0.1" placeholder="0" value="${lossRate || 0}"
+          oninput="ingLossInput(this,'${rowId}')" onblur="ingLossBlur(this,'${rowId}')">
+      </div>
+      <div class="ing-num-group" style="grid-column: 1 / -1; margin-top:2px; display:flex; justify-content:flex-end; align-items:center; gap:6px">
+        <span style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase">耗損後小計</span>
+        <div class="ing-num-val ing-loss-subtotal" id="lst-${rowId}" style="min-width:80px">${lossSubStr}</div>
+      </div>
+    </div>`;
   document.getElementById('ing-editor').appendChild(div);
 }
 
@@ -704,18 +745,40 @@ function sortIngByCategory() {
   toast('已依類別排序');
 }
 
+function updateLossSubtotal(rowId) {
+  const row = ingRows.find(r => r.rowId === rowId);
+  if (!row) return;
+  const uc = getUnitCost(row.refId, row.refType);
+  const subtotal = (uc !== null && row.amount > 0) ? uc * row.amount : null;
+  const lossSub = subtotal !== null ? calcLossSubtotal(subtotal, row.lossRate ?? 0) : null;
+  const lstEl = document.getElementById('lst-' + rowId);
+  if (lstEl) lstEl.textContent = lossSub !== null ? '$' + lossSub.toFixed(2) : '—';
+}
+
 function ingAmtInput(input, rowId) {
   const row = ingRows.find(r => r.rowId === rowId);
   if (!row) return;
   const amt = parseFloat(input.value) || 0;
   row.amount = amt;
   const uc = getUnitCost(row.refId, row.refType);
+  const subtotal = (uc !== null && amt > 0) ? uc * amt : null;
   const stEl = document.getElementById('st-' + rowId);
-  if (stEl) stEl.textContent = (uc !== null && amt > 0) ? '$' + (uc * amt).toFixed(2) : '—';
+  if (stEl) stEl.textContent = subtotal !== null ? '$' + subtotal.toFixed(2) : '—';
+  updateLossSubtotal(rowId);
 }
 function ingAmtBlur(input, rowId) {
   const row = ingRows.find(r => r.rowId === rowId);
   if (row) row.amount = parseFloat(input.value) || 0;
+}
+function ingLossInput(input, rowId) {
+  const row = ingRows.find(r => r.rowId === rowId);
+  if (!row) return;
+  row.lossRate = parseFloat(input.value) || 0;
+  updateLossSubtotal(rowId);
+}
+function ingLossBlur(input, rowId) {
+  const row = ingRows.find(r => r.rowId === rowId);
+  if (row) row.lossRate = parseFloat(input.value) || 0;
 }
 function ingRefChange(select, rowId) {
   const row = ingRows.find(r => r.rowId === rowId);
@@ -727,12 +790,14 @@ function ingRefChange(select, rowId) {
   const ucEl     = document.getElementById('uc-' + rowId);
   const stEl     = document.getElementById('st-' + rowId);
   const vendorEl = document.getElementById('vendor-' + rowId);
+  const subtotal = (uc !== null && row.amount > 0) ? uc * row.amount : null;
   if (ucEl) ucEl.textContent = uc !== null ? '$' + uc.toFixed(4) : '—';
-  if (stEl) stEl.textContent = (uc !== null && row.amount > 0) ? '$' + (uc * row.amount).toFixed(2) : '—';
+  if (stEl) stEl.textContent = subtotal !== null ? '$' + subtotal.toFixed(2) : '—';
   if (vendorEl) {
     const vendor = getVendorStr(row.refId, row.refType);
     vendorEl.textContent = vendor ? '🏭 ' + vendor : '';
   }
+  updateLossSubtotal(rowId);
 }
 function removeIngRow(rowId) {
   ingRows = ingRows.filter(r => r.rowId !== rowId);
@@ -753,11 +818,13 @@ function openRecipeModal(id = null) {
     document.getElementById('r-type').value       = r.type;
     document.getElementById('r-yield').value      = r.yield;
     document.getElementById('r-yield-unit').value = r.yieldUnit;
+    document.getElementById('r-loss').value       = r.lossRate ?? 0;
     r.ingredients.forEach(ing => addIngRow(ing));
   } else {
     ['r-name','r-yield'].forEach(i => document.getElementById(i).value = '');
     document.getElementById('r-type').value       = currentSubTab;
     document.getElementById('r-yield-unit').value = 'g';
+    document.getElementById('r-loss').value       = 0;
   }
   document.getElementById('recipe-modal').classList.add('open');
   setTimeout(() => document.getElementById('r-name').focus(), 80);
@@ -768,21 +835,24 @@ function closeRecipeModal() {
 }
 
 function calcAndPreview() {
-  const yieldAmt  = parseFloat(document.getElementById('r-yield').value);
-  const yieldUnit = document.getElementById('r-yield-unit').value;
+  const yieldAmt    = parseFloat(document.getElementById('r-yield').value);
+  const yieldUnit   = document.getElementById('r-yield-unit').value;
+  const recipeLoss  = parseFloat(document.getElementById('r-loss').value) || 0;
   if (!yieldAmt || yieldAmt <= 0) return alert('請先填入產出量');
   const opts  = getRefOptions(editRecId);
   const valid = ingRows.filter(r => r.refId && r.amount > 0);
   if (!valid.length) return alert('請先加入食材並填寫用量');
 
-  let totalCost = 0, totalWeight = 0, rows = '';
+  let totalCost = 0, totalLossCost = 0, totalWeight = 0, rows = '';
   for (const row of valid) {
     const ref  = opts.find(o => o.id === row.refId);
     const name = ref ? ref.label.replace(/^\[.*?\] /, '') : '?';
     const unit = ref ? ref.unit : '';
     const uc   = getUnitCost(row.refId, row.refType);
     const sub  = uc !== null ? uc * row.amount : null;
+    const lossSub = sub !== null ? calcLossSubtotal(sub, row.lossRate ?? 0) : null;
     if (sub !== null) totalCost += sub;
+    if (lossSub !== null) totalLossCost += lossSub;
     totalWeight += row.amount;
     let priceStr = '—';
     if (row.refType === 'recipe') { const r = recipes.find(x=>x.id===row.refId); if(r) priceStr=`$${calcRecipeCost(r).toFixed(3)}`; }
@@ -792,15 +862,22 @@ function calcAndPreview() {
       <td style="text-align:right">${priceStr}</td><td style="text-align:right">${unit}</td>
       <td style="text-align:right">${uc!==null?'$'+uc.toFixed(6):'—'}</td>
       <td style="text-align:right">${row.amount}</td>
-      <td style="text-align:right;font-weight:600;color:var(--accent)">${sub!==null?'$'+sub.toFixed(2):'—'}</td>
+      <td style="text-align:right;color:var(--accent)">${sub!==null?'$'+sub.toFixed(2):'—'}</td>
+      <td style="text-align:right;color:var(--muted)">${(row.lossRate??0)}%</td>
+      <td style="text-align:right;font-weight:700;color:var(--green)">${lossSub!==null?'$'+lossSub.toFixed(2):'—'}</td>
     </tr>`;
   }
-  const perUnit = totalCost / yieldAmt;
+  // 配方層耗損：耗損後總成本 ÷ (1 - 配方耗損率/100)
+  const finalCost = recipeLoss < 100 ? totalLossCost / (1 - recipeLoss / 100) : totalLossCost;
+  const perUnit   = finalCost / yieldAmt;
+  const basePerUnit = totalCost / yieldAmt;
   document.getElementById('cost-table-body').innerHTML = rows;
   document.getElementById('cost-summary').innerHTML =
     `<div><span style="font-size:11px;color:var(--muted)">原料總重量</span><br><strong>${totalWeight}</strong></div>
-     <div><span style="font-size:11px;color:var(--muted)">總成本</span><br><strong>$${totalCost.toFixed(2)}</strong></div>
-     <div><span style="font-size:11px;color:var(--muted)">每 ${yieldUnit} 成本</span><br><strong style="color:var(--green);font-size:16px">$${perUnit.toFixed(4)}</strong></div>`;
+     <div><span style="font-size:11px;color:var(--muted)">食材總成本</span><br><strong>$${totalCost.toFixed(2)}</strong></div>
+     <div><span style="font-size:11px;color:var(--muted)">食材耗損後</span><br><strong>$${totalLossCost.toFixed(2)}</strong></div>
+     <div><span style="font-size:11px;color:var(--muted)">配方耗損率</span><br><strong>${recipeLoss}%</strong></div>
+     <div><span style="font-size:11px;color:var(--muted)">每 ${yieldUnit} 最終成本</span><br><strong style="color:var(--green);font-size:16px">$${perUnit.toFixed(4)}</strong></div>`;
   document.getElementById('recipe-cost-panel').style.display = 'block';
 }
 
@@ -809,12 +886,13 @@ function saveRecipe() {
   const type      = document.getElementById('r-type').value;
   const yieldAmt  = parseFloat(document.getElementById('r-yield').value);
   const yieldUnit = document.getElementById('r-yield-unit').value;
+  const lossRate  = parseFloat(document.getElementById('r-loss').value) || 0;
   if (!name)               return alert('請輸入配方名稱');
   if (!yieldAmt||yieldAmt<=0) return alert('請輸入正確產出量');
   const valid = ingRows.filter(r => r.refId && r.amount > 0);
   if (!valid.length)       return alert('請至少加入一項食材');
-  const data = { name, type, yield: yieldAmt, yieldUnit,
-    ingredients: valid.map(r => ({ refId:r.refId, refType:r.refType, amount:r.amount })) };
+  const data = { name, type, yield: yieldAmt, yieldUnit, lossRate,
+    ingredients: valid.map(r => ({ refId:r.refId, refType:r.refType, amount:r.amount, lossRate: r.lossRate ?? 0 })) };
   if (editRecId) {
     const i = recipes.findIndex(x => x.id === editRecId);
     recipes[i] = { ...recipes[i], ...data };
@@ -899,14 +977,21 @@ function renderRecipes(type, search = '') {
       const refUnit = ref ? ref.unit : '';
       const uc      = getUnitCost(ing.refId, ing.refType);
       const sub     = uc !== null ? uc * ing.amount : 0;
+      const lr      = ing.lossRate ?? 0;
+      const lossSub = calcLossSubtotal(sub, lr) ?? sub;
       totalWeight  += ing.amount;
       let price = 0;
       if (ing.refType === 'recipe') { const rec=recipes.find(x=>x.id===ing.refId); if(rec) price=calcRecipeCost(rec); }
       else { const m=materials.find(x=>x.id===ing.refId); if(m) price=m.price; }
-      return { name: refName, unit: refUnit, price, unitCost: uc ?? 0, amount: ing.amount, subtotal: sub, refType: ing.refType };
+      return { name: refName, unit: refUnit, price, unitCost: uc ?? 0, amount: ing.amount, subtotal: sub, lossRate: lr, lossSubtotal: lossSub, refType: ing.refType };
     });
 
     rowsData = sortIngredientRows(r.id, rowsData);
+
+    const totalLossCost = rowsData.reduce((s, row) => s + row.lossSubtotal, 0);
+    const recipeLoss    = r.lossRate ?? 0;
+    const finalCost     = recipeLoss < 100 ? totalLossCost / (1 - recipeLoss / 100) : totalLossCost;
+    const finalPerUnit  = r.yield > 0 ? finalCost / r.yield : 0;
 
     const detailRows = rowsData.map(row => `<tr>
         <td><span class="badge ${getRefBadgeClass(row.refType)}">${getRefTypeLabel(row.refType)}</span> ${row.name}</td>
@@ -914,7 +999,9 @@ function renderRecipes(type, search = '') {
         <td class="td-right">${row.unit}</td>
         <td class="td-right">$${row.unitCost.toFixed(6)}</td>
         <td class="td-right">${row.amount}</td>
-        <td class="td-right" style="font-weight:600;color:var(--accent)">$${row.subtotal.toFixed(2)}</td>
+        <td class="td-right" style="color:var(--accent)">$${row.subtotal.toFixed(2)}</td>
+        <td class="td-right" style="color:var(--muted)">${row.lossRate}%</td>
+        <td class="td-right" style="font-weight:700;color:var(--green)">$${row.lossSubtotal.toFixed(2)}</td>
       </tr>`).join('');
 
     const isOpen = openCardIds.has(r.id);
@@ -923,12 +1010,12 @@ function renderRecipes(type, search = '') {
       <div class="recipe-card-header" onclick="toggleCard('${r.id}')">
         <div>
           <div class="recipe-card-name">${r.name}</div>
-          <div class="recipe-card-meta">產出 ${r.yield} ${r.yieldUnit}・${r.ingredients.length} 項食材</div>
+          <div class="recipe-card-meta">產出 ${r.yield} ${r.yieldUnit}・${r.ingredients.length} 項食材${recipeLoss > 0 ? `・配方耗損 ${recipeLoss}%` : ''}</div>
         </div>
         <div class="flex-gap">
           <div class="recipe-card-cost">
-            <div class="per-unit">$${perUnit.toFixed(4)} <span style="font-size:11px;color:var(--muted)">/ ${r.yieldUnit}</span></div>
-            <div class="total-cost">總成本 $${totalCost.toFixed(2)}</div>
+            <div class="per-unit">$${finalPerUnit.toFixed(4)} <span style="font-size:11px;color:var(--muted)">/ ${r.yieldUnit}</span></div>
+            <div class="total-cost">最終成本 $${finalCost.toFixed(2)}${finalCost !== totalCost ? `・原始 $${totalCost.toFixed(2)}` : ''}</div>
           </div>
           <i class="chevron${isOpen ? ' open' : ''}" id="chev-${r.id}">▼</i>
         </div>
@@ -942,6 +1029,8 @@ function renderRecipes(type, search = '') {
             <th class="td-right sortable" onclick="toggleDetailSort('${r.id}','unitCost')">單價${detailSortIcon(r.id,'unitCost')}</th>
             <th class="td-right sortable" onclick="toggleDetailSort('${r.id}','amount')">用量${detailSortIcon(r.id,'amount')}</th>
             <th class="td-right sortable" onclick="toggleDetailSort('${r.id}','subtotal')">小計${detailSortIcon(r.id,'subtotal')}</th>
+            <th class="td-right">耗損率%</th>
+            <th class="td-right sortable" onclick="toggleDetailSort('${r.id}','lossSubtotal')">耗損後小計${detailSortIcon(r.id,'lossSubtotal')}</th>
           </tr></thead>
           <tbody>${detailRows}</tbody>
         </table>
@@ -952,8 +1041,9 @@ function renderRecipes(type, search = '') {
           </div>
           <div class="cost-stats">
             <div class="cost-stat"><div class="label">原料重量</div><div class="value">${totalWeight}</div></div>
-            <div class="cost-stat"><div class="label">總成本</div><div class="value">$${totalCost.toFixed(2)}</div></div>
-            <div class="cost-stat"><div class="label">每 ${r.yieldUnit} 成本</div><div class="value accent">$${perUnit.toFixed(4)}</div></div>
+            <div class="cost-stat"><div class="label">食材耗損後</div><div class="value">$${totalLossCost.toFixed(2)}</div></div>
+            <div class="cost-stat"><div class="label">配方耗損 ${recipeLoss}%</div><div class="value">$${finalCost.toFixed(2)}</div></div>
+            <div class="cost-stat"><div class="label">每 ${r.yieldUnit} 最終成本</div><div class="value accent">$${finalPerUnit.toFixed(4)}</div></div>
           </div>
         </div>
       </div>
