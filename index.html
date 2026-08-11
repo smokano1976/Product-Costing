@@ -129,7 +129,13 @@ tr:hover td { background: #faf9f7; }
 .recipe-card-cost .total-cost { font-size: 11px; color: var(--muted); text-align: right; }
 .recipe-card-body { display: none; border-top: 1px solid var(--border); }
 .recipe-card-body.open { display: block; }
-.recipe-detail-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.recipe-sort-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.recipe-sort-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.recipe-sort-btn { padding: 4px 12px; border: 1px solid var(--border); border-radius: 100px; background: var(--surface); color: var(--muted); font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+.recipe-sort-btn:hover { background: var(--surface2); color: var(--text); }
+.recipe-sort-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.recipe-sort-dir-btn { padding: 4px 12px; border: 1px solid var(--border); border-radius: 100px; background: var(--surface2); color: var(--text); font-size: 12px; cursor: pointer; }
+.recipe-sort-dir-btn:hover { background: var(--border); }
 .recipe-detail-table th { background: #faf9f7; padding: 6px 14px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; border-bottom: 1px solid var(--border); }
 .recipe-detail-table th.sortable { cursor: pointer; user-select: none; }
 .recipe-detail-table th.sortable:hover { color: var(--accent); }
@@ -225,6 +231,14 @@ tr:hover td { background: #faf9f7; }
   <div class="sub-tabs">
     <button class="sub-tab-btn active" onclick="switchSubTab('semi', this)">半成品</button>
     <button class="sub-tab-btn" onclick="switchSubTab('product', this)">成品</button>
+  </div>
+
+  <div class="recipe-sort-bar" id="recipe-sort-bar" style="display:none">
+    <span class="recipe-sort-label">排序：</span>
+    <button class="recipe-sort-btn active" onclick="setCardSort('none', this)">預設</button>
+    <button class="recipe-sort-btn" onclick="setCardSort('name', this)">品名</button>
+    <button class="recipe-sort-btn" onclick="setCardSort('cost', this)">每單位成本</button>
+    <button class="recipe-sort-dir-btn" id="card-sort-dir-btn" onclick="toggleCardSortDir()" style="display:none">▲ 遞增</button>
   </div>
 
   <div id="recipes-list"></div>
@@ -388,6 +402,8 @@ let editMatId = null, editRecId = null;
 let ingRows   = [];
 let currentSubTab = 'semi';       // recipes: 'semi' | 'product'
 let currentMatTab = 'material';   // materials: 'material' | 'package'
+let cardSortField = 'none';       // 'none' | 'name' | 'cost'
+let cardSortDir   = 'asc';        // 'asc' | 'desc'
 
 function persist() {
   localStorage.setItem('cost_v5_materials', JSON.stringify(materials));
@@ -466,7 +482,48 @@ function switchSubTab(type, btn) {
   currentSubTab = type;
   btn.parentElement.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  // 只有成品顯示卡片排序列
+  document.getElementById('recipe-sort-bar').style.display = type === 'product' ? 'flex' : 'none';
   renderCurrentRecipeTab();
+}
+function setCardSort(field, btn) {
+  cardSortField = field;
+  document.querySelectorAll('.recipe-sort-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const dirBtn = document.getElementById('card-sort-dir-btn');
+  dirBtn.style.display = field !== 'none' ? 'inline-block' : 'none';
+  renderCurrentRecipeTab();
+}
+function toggleCardSortDir() {
+  cardSortDir = cardSortDir === 'asc' ? 'desc' : 'asc';
+  document.getElementById('card-sort-dir-btn').textContent = cardSortDir === 'asc' ? '▲ 遞增' : '▼ 遞減';
+  renderCurrentRecipeTab();
+}
+function sortRecipeCards(list) {
+  if (cardSortField === 'none') return list;
+  return [...list].sort((a, b) => {
+    let va, vb;
+    if (cardSortField === 'name') {
+      va = a.name; vb = b.name;
+      const cmp = va.localeCompare(vb, 'zh-Hant');
+      return cardSortDir === 'asc' ? cmp : -cmp;
+    }
+    if (cardSortField === 'cost') {
+      const getFinalCost = r => {
+        const totalLoss = r.ingredients.reduce((s, ing) => {
+          const uc  = getUnitCost(ing.refId, ing.refType);
+          const sub = uc !== null ? uc * ing.amount : 0;
+          return s + (calcLossSubtotal(sub, ing.lossRate ?? 0) ?? sub);
+        }, 0);
+        const recipeLoss = r.lossRate ?? 0;
+        const final = recipeLoss < 100 ? totalLoss / (1 - recipeLoss / 100) : totalLoss;
+        return r.yield > 0 ? final / r.yield : 0;
+      };
+      va = getFinalCost(a); vb = getFinalCost(b);
+      return cardSortDir === 'asc' ? va - vb : vb - va;
+    }
+    return 0;
+  });
 }
 function switchMatSubTab(cat, btn) {
   currentMatTab = cat;
@@ -960,7 +1017,9 @@ let openCardIds = new Set();
 function renderRecipes(type, search = '') {
   const container = document.getElementById('recipes-list');
   const empty     = document.getElementById('recipes-empty');
-  const list = recipes.filter(r => r.type === type && r.name.includes(search));
+  let list = recipes.filter(r => r.type === type && r.name.includes(search));
+  // 成品才套用卡片排序
+  if (type === 'product') list = sortRecipeCards(list);
   if (!list.length) { container.innerHTML = ''; empty.style.display = 'block'; return; }
   empty.style.display = 'none';
 
@@ -1015,7 +1074,7 @@ function renderRecipes(type, search = '') {
         <div class="flex-gap">
           <div class="recipe-card-cost">
             <div class="per-unit">$${finalPerUnit.toFixed(4)} <span style="font-size:11px;color:var(--muted)">/ ${r.yieldUnit}</span></div>
-            <div class="total-cost">最終成本 $${finalCost.toFixed(2)}${finalCost !== totalCost ? `・原始 $${totalCost.toFixed(2)}` : ''}</div>
+            <div class="total-cost">最終成本 $${finalCost.toFixed(2)}${finalCost !== totalCost ? `<br>耗損前 $${totalCost.toFixed(2)}` : ''}</div>
           </div>
           <i class="chevron${isOpen ? ' open' : ''}" id="chev-${r.id}">▼</i>
         </div>
