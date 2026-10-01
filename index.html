@@ -554,15 +554,30 @@ function getUnitCost(refId, refType) {
   if (refType === 'recipe') {
     const r = recipes.find(x => x.id === refId);
     if (!r || !r.yield) return null;
-    return calcRecipeCost(r) / r.yield;
+    // 帶入耗損後的每單位成本
+    return calcRecipeFinalCostPerUnit(r);
   }
   return null;
 }
 function calcRecipeCost(r) {
+  // 原始總成本（不含耗損），用於顯示「耗損前」數字
   return r.ingredients.reduce((sum, ing) => {
     const uc = getUnitCost(ing.refId, ing.refType);
     return sum + (uc !== null ? uc * ing.amount : 0);
   }, 0);
+}
+function calcRecipeFinalCostPerUnit(r) {
+  // 含食材耗損 + 配方耗損的每單位真實成本
+  if (!r || !r.yield) return 0;
+  const totalLoss = r.ingredients.reduce((sum, ing) => {
+    const uc  = getUnitCost(ing.refId, ing.refType);
+    const sub = uc !== null ? uc * ing.amount : 0;
+    const lr  = ing.lossRate ?? 0;
+    return sum + (lr < 100 ? sub / (1 - lr / 100) : sub);
+  }, 0);
+  const recipeLoss = r.lossRate ?? 0;
+  const finalCost  = recipeLoss < 100 ? totalLoss / (1 - recipeLoss / 100) : totalLoss;
+  return finalCost / r.yield;
 }
 
 // ══════════════════════════════════════════
@@ -690,11 +705,14 @@ function deleteMaterial(id) {
 function getRefOptions(excludeId = null) {
   return [
     ...materials.filter(m => m.category === 'material')
-                .map(m => ({ id: m.id, type: 'material', label: `[原料] ${m.name}`, unit: m.unit })),
+                .map(m => ({ id: m.id, type: 'material', label: `[原料] ${m.name}${m.vendor ? '（' + m.vendor + '）' : ''}`, unit: m.unit })),
     ...materials.filter(m => m.category === 'package')
-                .map(m => ({ id: m.id, type: 'package', label: `[包材] ${m.name}`, unit: m.unit })),
+                .map(m => ({ id: m.id, type: 'package', label: `[包材] ${m.name}${m.vendor ? '（' + m.vendor + '）' : ''}`, unit: m.unit })),
     ...recipes.filter(r => r.type === 'semi' && r.id !== excludeId)
-               .map(r => ({ id: r.id, type: 'recipe', label: `[半成品] ${r.name}`, unit: r.yieldUnit }))
+               .map(r => {
+                 const cpu = calcRecipeFinalCostPerUnit(r);
+                 return { id: r.id, type: 'recipe', label: `[半成品] ${r.name}（$${cpu.toFixed(4)}/${r.yieldUnit}）`, unit: r.yieldUnit };
+               })
   ];
 }
 function getRefTypeLabel(type) {
