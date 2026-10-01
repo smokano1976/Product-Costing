@@ -702,18 +702,29 @@ function deleteMaterial(id) {
 // ══════════════════════════════════════════
 //  INGREDIENT EDITOR
 // ══════════════════════════════════════════
+function sortByNameThenVendor(arr) {
+  return [...arr].sort((a, b) => {
+    const nameCmp = a.name.localeCompare(b.name, 'zh-Hant');
+    if (nameCmp !== 0) return nameCmp;
+    return (a.vendor || '').localeCompare(b.vendor || '', 'zh-Hant');
+  });
+}
+
 function getRefOptions(excludeId = null) {
-  return [
-    ...materials.filter(m => m.category === 'material')
-                .map(m => ({ id: m.id, type: 'material', label: `[原料] ${m.name}${m.vendor ? '（' + m.vendor + '）' : ''}`, unit: m.unit })),
-    ...materials.filter(m => m.category === 'package')
-                .map(m => ({ id: m.id, type: 'package', label: `[包材] ${m.name}${m.vendor ? '（' + m.vendor + '）' : ''}`, unit: m.unit })),
-    ...recipes.filter(r => r.type === 'semi' && r.id !== excludeId)
-               .map(r => {
-                 const cpu = calcRecipeFinalCostPerUnit(r);
-                 return { id: r.id, type: 'recipe', label: `[半成品] ${r.name}（$${cpu.toFixed(4)}/${r.yieldUnit}）`, unit: r.yieldUnit };
-               })
-  ];
+  const matList = sortByNameThenVendor(materials.filter(m => m.category === 'material'))
+    .map(m => ({ id: m.id, type: 'material', label: `[原料] ${m.name}${m.vendor ? '（' + m.vendor + '）' : ''}`, unit: m.unit }));
+
+  const pkgList = sortByNameThenVendor(materials.filter(m => m.category === 'package'))
+    .map(m => ({ id: m.id, type: 'package', label: `[包材] ${m.name}${m.vendor ? '（' + m.vendor + '）' : ''}`, unit: m.unit }));
+
+  const semiList = [...recipes.filter(r => r.type === 'semi' && r.id !== excludeId)]
+    .sort((a, b) => a.name.localeCompare(b.name, 'zh-Hant'))
+    .map(r => {
+      const cpu = calcRecipeFinalCostPerUnit(r);
+      return { id: r.id, type: 'recipe', label: `[半成品] ${r.name}（$${cpu.toFixed(4)}/${r.yieldUnit}）`, unit: r.yieldUnit };
+    });
+
+  return [...matList, ...pkgList, ...semiList];
 }
 function getRefTypeLabel(type) {
   return type === 'material' ? '原料' : type === 'package' ? '包材' : '半成品';
